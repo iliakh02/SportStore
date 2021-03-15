@@ -1,0 +1,16 @@
+﻿using SportStore.Models.Entities;
+
+namespace SportStore.Data.Abstract
+{
+    interface IRepositories
+    {
+        public interface ICartRepository : IEntityBaseRepository<Cart> { }
+        public interface ICategoryRepository : IEntityBaseRepository<Category> { }
+        public interface IOrderRepository : IEntityBaseRepository<Order> { }
+        public interface IProductCartRepository : IEntityBaseRepository<ProductCart> { }
+        public interface IProductOrderRepository : IEntityBaseRepository<ProductOrder> { }
+        public interface IProductRepository : IEntityBaseRepository<Product> { }
+        public interface IRoleRepository : IEntityBaseRepository<Role> { }
+        public interface IUserRepository : IEntityBaseRepository<User> { }
+    }
+}
