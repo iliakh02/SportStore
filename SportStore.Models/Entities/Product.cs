@@ -18,7 +18,7 @@ namespace SportStore.Models.Entities
         public int Amount { get; set; }
         public decimal Price { get; set; }
 
-        public ICollection<ProductCart> ProductCarts { get; set; }
+        public ICollection<Cart> Carts { get; set; }
         public ICollection<ProductOrder> ProductOrders { get; set; }
     }
 }
