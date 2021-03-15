@@ -1,9 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SportStore.Data;
+using SportStore.Data.Abstract;
+using SportStore.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +27,18 @@ namespace SportStore.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<SportStoreContext>(options => 
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultString")));
+
+            services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IProductCartRepository, ProductCartRepository>();
+            services.AddScoped<IProductOrderRepository, ProductOrderRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
             services.AddControllersWithViews();
         }
 
