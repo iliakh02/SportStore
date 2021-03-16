@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using SportStore.Data;
 using SportStore.Data.Abstract;
 using SportStore.Data.Repositories;
+using SportStore.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,16 +29,17 @@ namespace SportStore.WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SportStoreContext>(options => 
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), optionsBuilder =>
+                optionsBuilder.MigrationsAssembly("SportStore.Data")));
 
-            services.AddScoped<ICartRepository, CartRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IProductOrderRepository, ProductOrderRepository>();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<SportStoreContext>();
+
+            services.AddTransient<ICartRepository, CartRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IProductOrderRepository, ProductOrderRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
 
             services.AddControllersWithViews();
         }
@@ -62,6 +65,7 @@ namespace SportStore.WebUI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

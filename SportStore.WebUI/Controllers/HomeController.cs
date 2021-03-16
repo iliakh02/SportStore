@@ -15,8 +15,8 @@ namespace SportStore.WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private IUserRepository userRepository;
-        public HomeController(ILogger<HomeController> logger, IUserRepository userRepository)
+        private IProductRepository userRepository;
+        public HomeController(ILogger<HomeController> logger, IProductRepository userRepository)
         {
             this.userRepository = userRepository;
             _logger = logger;
