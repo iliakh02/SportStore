@@ -14,6 +14,7 @@ namespace SportStore.Models.Entities
         [Required]
         [MaxLength(100)]
         public string LastName { get; set; }
+        [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
 
         public ICollection<Order> Orders { get; set; }

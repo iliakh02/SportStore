@@ -1,10 +1,12 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿/* Global background color */
+body { 
+    --main-bg-color: #eeeeee;
+}
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
@@ -54,13 +56,15 @@ button.accept-policy {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+    background-color: var(--main-bg-color);
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: var(--main-bg-color);
 }
 .footer {
   position: absolute;
@@ -69,3 +73,17 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+div.authentication-form-block {
+    display: flex;
+    justify-content: center;
+}
+
+div.authentication-form {
+    max-width: 430px;
+    background-color: #fff;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 15px;
+}
+

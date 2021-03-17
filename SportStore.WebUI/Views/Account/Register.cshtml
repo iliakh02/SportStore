@@ -1,0 +1,54 @@
+﻿@model RegisterViewModel
+
+
+    <div class="authentication-form-block">
+        <div class="authentication-form">
+            <div class="p-3">
+                <h2 class="text-center">Register</h2>
+
+                <form method="post" asp-controller="Account" asp-action="Register">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div>
+                        <div class="form-group">
+                            <label asp-for="FirstName"></label><br />
+                            <input type="text" asp-for="FirstName" class="w-100"/>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LastName"></label><br />
+                            <input type="text" asp-for="LastName"  class="w-100"/>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email"></label><br />
+                            <input type="email" asp-for="Email"  class="w-100"/>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber"></label><br />
+                            <input type="tel" asp-for="PhoneNumber"  class="w-100"/>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DateOfBirth"></label><br />
+                            <input type="date" asp-for="DateOfBirth"  class="w-100"/>
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password"></label><br />
+                            <input type="password" asp-for="Password"  class="w-100"/>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ConfirmPassword"></label><br />
+                            <input type="password" asp-for="ConfirmPassword"  class="w-100"/>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Register" class="center-block btn-lg"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
