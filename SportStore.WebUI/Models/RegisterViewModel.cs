@@ -29,7 +29,7 @@ namespace SportStore.WebUI.Models
 
         [Required(ErrorMessage = "Please, enter email.")]
         [MaxLength(100)]
-        [Display(Name = "Email")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please, enter password.")]

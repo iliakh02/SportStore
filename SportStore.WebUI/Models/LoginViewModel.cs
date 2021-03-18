@@ -13,6 +13,7 @@ namespace SportStore.WebUI.Models
         [Required(ErrorMessage = "Please, enter password.")]
         public string Password { get; set; }
 
+        [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
         public string ReturnUrl { get; set; }
     }

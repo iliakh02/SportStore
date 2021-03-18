@@ -67,6 +67,7 @@ namespace SportStore.WebUI.Controllers
         }
 
         [HttpPost("/login")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
             if (ModelState.IsValid)
@@ -95,7 +96,8 @@ namespace SportStore.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> logout()
+        [Route("/logout")]
+        public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");

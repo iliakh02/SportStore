@@ -3,7 +3,7 @@
 
 <div class="authentication-form-block">
     <div class="authentication-form">
-        <div class="p-3">
+        <div class="p-3 d-flex flex-column">
             <h2 class="text-center">Log in</h2>
 
             <form method="post" asp-controller="Account" asp-action="Login">
@@ -24,10 +24,15 @@
                         <label asp-for="RememberMe"></label>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Log in" class="center-block btn-lg" />
+                        <input type="submit" value="Log in" class="center-block btn-primary btn-lg" />
                     </div>
                 </div>
             </form>
+
+            <a asp-controller="" asp-action="" class="text-center">Forgot passqord?</a>
+            <div class="divider"></div>
+            <hr class="w-100"/>
+            <span class="center-block">New to our site? <a asp-controller="Account" asp-action="Register">Sign up</a></span>
         </div>
     </div>
 </div>

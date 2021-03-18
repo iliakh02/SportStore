@@ -30,11 +30,13 @@
                         <li class="nav-item">
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a>
+                                <form method="post" asp-controller="Account" asp-action="Logout" class="nav-link">
+                                    <input type="submit" value="Log out" class="nav-link text-light bg-dark border-0">
+                                </form>
                             }
                             else
                             {
-                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-user"></span> Log In</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-user"></span> Log in</a>
                             }
                         </li>
                     </ul>

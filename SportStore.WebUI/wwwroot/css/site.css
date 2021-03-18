@@ -87,3 +87,7 @@ div.authentication-form {
     border-radius: 15px;
 }
 
+
+input.text-light:focus, input.text-light:hover {
+    color: #cbd3da !important;
+}
