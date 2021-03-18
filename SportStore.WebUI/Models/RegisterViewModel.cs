@@ -18,9 +18,6 @@ namespace SportStore.WebUI.Models
         [Display(Name = "Surname")]
         public string LastName { get; set; }
 
-        [Display(Name = "Date of birth")]
-        public DateTime DateOfBirth { get; set; }
-
         [Required(ErrorMessage = "Please, enter phone number.")]
         [MaxLength(13)]
         [MinLength(13)]

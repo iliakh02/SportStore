@@ -36,7 +36,6 @@ namespace SportStore.WebUI.Controllers
                     FirstName = registerViewModel.FirstName,
                     LastName = registerViewModel.LastName,
                     Email = registerViewModel.Email,
-                    DateOfBirth = registerViewModel.DateOfBirth,
                     UserName = registerViewModel.Email,
                     PhoneNumber = registerViewModel.PhoneNumber
                 };
@@ -72,7 +71,7 @@ namespace SportStore.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, loginViewModel.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(loginViewModel.Login, loginViewModel.Password, loginViewModel.RememberMe, false);
 
                 if (result.Succeeded)
                 {
