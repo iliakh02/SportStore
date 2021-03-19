@@ -1,0 +1,45 @@
+﻿@addTagHelper *, SportStore.WebUI
+@model SportStore.WebUI.Areas.Admin.Models.UsersViewModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone number</th>
+            <th>Roles</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @for (int i = 0; i < Model.Users.Count; i++)
+        {
+            <tr>
+                <td>@Model.Users[i].Id</td>
+                <td>@Model.Users[i].FirstName</td>
+                <td>@Model.Users[i].LastName</td>
+                <td>@Model.Users[i].UserName</td>
+                <td>@Model.Users[i].Email</td>
+                <td>@Model.Users[i].PhoneNumber</td>
+                <td>@Model.Roles[i]</td>
+                <td>
+                    <a asp-route-userId="@Model.Users[i].Id" asp-controller="Users" asp-action="Edit" class="btn btn-primary">Edit</a>
+                </td>
+                <td>
+                    <form method="post" asp-route-id="@Model.Users[i].Id" asp-controller="Users" asp-action="Delete">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<br />
+
+<page-link page-model="Model.PageModel" page-action="Index"></page-link>

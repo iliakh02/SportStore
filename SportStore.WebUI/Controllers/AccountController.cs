@@ -44,6 +44,7 @@ namespace SportStore.WebUI.Controllers
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRolesAsync(newUser, new List<string> { "User" });
                     await _signInManager.SignInAsync(newUser, false);
                     return RedirectToAction("Index", "Home");
                 }
