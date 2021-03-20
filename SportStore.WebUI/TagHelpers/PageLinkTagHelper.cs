@@ -29,6 +29,9 @@ namespace SportStore.WebUI.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
+            if (PageModel.TotalPages == 1)
+                return;
+
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             output.TagName = "div";
 
@@ -39,16 +42,77 @@ namespace SportStore.WebUI.TagHelpers
 
             if(PageModel.HasPreviousPage)
             {
+                // Go to previous page.
+                TagBuilder item = new TagBuilder("li");
+                TagBuilder link = new TagBuilder("a");
+
+                link.Attributes["href"] = urlHelper.Action(PageAction, new { page = PageModel.PageNumber - 1, sortOrder = SortOrder });
+
+                item.AddCssClass("page-item");
+                link.AddCssClass("page-link");
+                link.InnerHtml.Append("<");
+                item.InnerHtml.AppendHtml(link);
+                tag.InnerHtml.AppendHtml(item);
+
+                // Go to first page.
+                if(PageModel.NeedGoToFirstPage)
+                {
+                    TagBuilder firstPage = CreateTag(1, urlHelper);
+                    tag.InnerHtml.AppendHtml(firstPage);
+                }
+
+                // Points.
+                if(PageModel.HasPrePoints)
+                {
+                    TagBuilder pointsItem = new TagBuilder("li");
+                    TagBuilder points = new TagBuilder("span");
+                    points.InnerHtml.Append("...");
+                    pointsItem.InnerHtml.AppendHtml(points);
+                    tag.InnerHtml.AppendHtml(pointsItem);
+                }
+
+                // Show link on previous page.
                 TagBuilder prevItem = CreateTag(PageModel.PageNumber - 1, urlHelper);
                 tag.InnerHtml.AppendHtml(prevItem);
             }
 
+            // Current page.
             tag.InnerHtml.AppendHtml(currentItem);
 
             if(PageModel.HasNextPage)
             {
+                // Show link on next page.
                 TagBuilder nextItem = CreateTag(PageModel.PageNumber + 1, urlHelper);
                 tag.InnerHtml.AppendHtml(nextItem);
+
+                // Points.
+                if (PageModel.HasPostPoints)
+                {
+                    TagBuilder pointsItem = new TagBuilder("li");
+                    TagBuilder points = new TagBuilder("span");
+                    points.InnerHtml.Append("...");
+                    pointsItem.InnerHtml.AppendHtml(points);
+                    tag.InnerHtml.AppendHtml(pointsItem);
+                }
+
+                // Go to last page.
+                if (PageModel.NeedGoToLastPage)
+                {
+                    TagBuilder firstPage = CreateTag(PageModel.TotalPages, urlHelper);
+                    tag.InnerHtml.AppendHtml(firstPage);
+                }
+
+                // Go to next page.
+                TagBuilder item = new TagBuilder("li");
+                TagBuilder link = new TagBuilder("a");
+
+                link.Attributes["href"] = urlHelper.Action(PageAction, new { page = PageModel.PageNumber + 1, sortOrder = SortOrder });
+
+                item.AddCssClass("page-item");
+                link.AddCssClass("page-link");
+                link.InnerHtml.Append(">");
+                item.InnerHtml.AppendHtml(link);
+                tag.InnerHtml.AppendHtml(item);
             }
 
             output.Content.AppendHtml(tag);

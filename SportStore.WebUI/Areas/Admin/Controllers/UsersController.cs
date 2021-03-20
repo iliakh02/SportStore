@@ -41,7 +41,7 @@ namespace SportStore.WebUI.Areas.Admin.Controllers
                 _ => users.OrderBy(n => n.Id),
             };
             
-            int pageSize = 3;
+            int pageSize = 4;
             List<string> rolesPerPage = new List<string>();
             List<User> usersPerPage = sortUsers.ToList().Skip((page - 1) * pageSize).Take(pageSize).ToList();
             foreach (var user in usersPerPage)

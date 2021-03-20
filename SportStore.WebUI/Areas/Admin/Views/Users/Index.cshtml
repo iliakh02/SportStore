@@ -17,7 +17,6 @@
                     <th scope="col">
                         <sort-header action="Index" current="@Model.SortViewModel.Current" property="@Model.SortViewModel.LastNameSort">Surname</sort-header>
                     </th>
-                    <th scope="col">Username</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone number</th>
                     <th scope="col">Roles</th>
@@ -30,19 +29,18 @@
                 @for (int i = 0; i < Model.Users.Count; i++)
                 {
                     <tr scope="row">
-                        <td>@Model.Users[i].Id</td>
-                        <td>@Model.Users[i].FirstName</td>
-                        <td>@Model.Users[i].LastName</td>
-                        <td>@Model.Users[i].UserName</td>
-                        <td>@Model.Users[i].Email</td>
-                        <td>@Model.Users[i].PhoneNumber</td>
-                        <td>@Model.Roles[i]</td>
+                        <td class="align-middle">@Model.Users[i].Id</td>
+                        <td class="align-middle">@Model.Users[i].FirstName</td>
+                        <td class="align-middle">@Model.Users[i].LastName</td>
+                        <td class="align-middle">@Model.Users[i].Email</td>
+                        <td class="align-middle">@Model.Users[i].PhoneNumber</td>
+                        <td class="align-middle">@Model.Roles[i]</td>
                         <td>
-                            <a asp-route-userId="@Model.Users[i].Id" asp-controller="Users" asp-action="Edit" class="btn btn-primary">Edit</a>
+                            <a asp-route-userId="@Model.Users[i].Id" asp-controller="Users" asp-action="Edit" class="btn btn-primary glyphicon glyphicon-pencil"></a>
                         </td>
                         <td>
                             <form method="post" asp-route-id="@Model.Users[i].Id" asp-controller="Users" asp-action="Delete">
-                                <input type="submit" value="Delete" class="btn btn-danger" />
+                                <button type="submit" value=" " class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
                             </form>
                         </td>
                     </tr>

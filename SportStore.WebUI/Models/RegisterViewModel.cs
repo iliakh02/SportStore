@@ -10,16 +10,22 @@ namespace SportStore.WebUI.Models
     {
         [Required(ErrorMessage = "Please, enter name.")]
         [MaxLength(100)]
-        [Display(Name = "Name")]
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Please, enter surname.")]
+        [Required(ErrorMessage = "Please, enter last name.")]
         [MaxLength(100)]
-        [Display(Name = "Surname")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Please, enter username.")]
+        [MaxLength(100)]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
         [Required(ErrorMessage = "Please, enter phone number.")]
         [Display(Name = "Phone number")]
+        [RegularExpression(@"^((8|\+)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$", ErrorMessage = "This phone number is not valid.")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Please, enter email.")]
@@ -29,11 +35,15 @@ namespace SportStore.WebUI.Models
 
         [Required(ErrorMessage = "Please, enter password.")]
         [DataType(DataType.Password)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", 
+            ErrorMessage = "This password is not valid.\r\nPassword has contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Please, enter password.")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Passwords are mismatch.")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", 
+            ErrorMessage = "This password is not valid.\r\nPassword has contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.")]
         [Display(Name = "Confirm password")]
         public string ConfirmPassword { get; set; }
     }

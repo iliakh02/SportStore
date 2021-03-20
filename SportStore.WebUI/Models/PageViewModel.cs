@@ -29,5 +29,36 @@ namespace SportStore.WebUI.Models
                 return (PageNumber < TotalPages);
             }
         }
+
+        public bool HasPrePoints { 
+            get
+            {
+                return PageNumber > 3;
+            }
+        }
+
+        public bool HasPostPoints
+        {
+            get
+            {
+                return (TotalPages - PageNumber) > 2;
+            }
+        }
+
+        public bool NeedGoToFirstPage
+        {
+            get
+            {
+                return PageNumber > 2;
+            }
+        }
+
+        public bool NeedGoToLastPage
+        {
+            get
+            {
+                return (TotalPages - PageNumber) > 1;
+            }
+        }
     }
 }

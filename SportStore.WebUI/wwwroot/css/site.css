@@ -1,19 +1,4 @@
 ﻿
-@font-face {
-    font-family: 'FontAwesome';
-    src: url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2') format('woff2'), url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff') format('woff'), url('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal
-}
-
-.glyphicon {
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
-}
 /* Global background color */
 body { 
     --main-bg-color: #eeeeee;
@@ -106,14 +91,6 @@ div.authentication-form {
 .shadow {
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
-
-.glyphicon-chevron-down:before {
-    content: "\f078";
-}
-
-.glyphicon-chevron-up:before {
-    content: "\f077";
-} 
 
 input.text-light:focus, input.text-light:hover {
     color: #cbd3da !important;
