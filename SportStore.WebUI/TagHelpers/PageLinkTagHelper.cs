@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using SportStore.WebUI.Areas.Admin.Models;
 using SportStore.WebUI.Models;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace SportStore.WebUI.TagHelpers
         public ViewContext ViewContext { get; set; }
         public PageViewModel PageModel { get; set; }
         public string PageAction { get; set; }
+        public UsersSortState SortOrder { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -62,7 +64,7 @@ namespace SportStore.WebUI.TagHelpers
             } 
             else
             {
-                link.Attributes["href"] = urlHelper.Action(PageAction, new { page = pageNumber});
+                link.Attributes["href"] = urlHelper.Action(PageAction, new { page = pageNumber, sortOrder = SortOrder});
             }
 
             item.AddCssClass("page-item");

@@ -19,8 +19,6 @@ namespace SportStore.WebUI.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Please, enter phone number.")]
-        [MaxLength(13)]
-        [MinLength(13)]
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
 

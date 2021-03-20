@@ -11,6 +11,7 @@ namespace SportStore.WebUI.Areas.Admin.Models
     {
         public List<User> Users { get; set; }
         public List<string> Roles { get; set; }
+        public UsersSortViewModel SortViewModel { get; set; }
         public PageViewModel PageModel { get; set; }
     }
 }
