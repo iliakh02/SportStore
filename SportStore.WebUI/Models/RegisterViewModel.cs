@@ -35,14 +35,14 @@ namespace SportStore.WebUI.Models
 
         [Required(ErrorMessage = "Please, enter password.")]
         [DataType(DataType.Password)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", 
+        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*():;><№~+=, -]).{8,}$", 
             ErrorMessage = "This password is not valid.\r\nPassword has contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Please, enter password.")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Passwords are mismatch.")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", 
+        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*():;><№~+=, -]).{8,}$", 
             ErrorMessage = "This password is not valid.\r\nPassword has contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.")]
         [Display(Name = "Confirm password")]
         public string ConfirmPassword { get; set; }

@@ -8,7 +8,7 @@ namespace SportStore.WebUI.Models
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Please, enter email.")]
+        [Required(ErrorMessage = "Please, enter login.")]
         public string Login { get; set; }
         [Required(ErrorMessage = "Please, enter password.")]
         public string Password { get; set; }

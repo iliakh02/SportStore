@@ -31,6 +31,7 @@ namespace SportStore.WebUI.TagHelpers
 
             string url = urlHelper.Action(Action, new { sortOrder = Property });
             output.Attributes.SetAttribute("href", url);
+            output.Attributes.SetAttribute("class", "text-light");
         }
     }
 }

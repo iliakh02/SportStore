@@ -19,14 +19,16 @@ namespace SportStore.WebUI.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpGet("/register")]
+        [HttpGet]
+        [Route("/Register")]
         public IActionResult Register()
         {
             return View();
         }
 
 
-        [HttpPost("/register")]
+        [HttpPost]
+        [Route("/Register")]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
             if (ModelState.IsValid)
@@ -36,7 +38,7 @@ namespace SportStore.WebUI.Controllers
                     FirstName = registerViewModel.FirstName,
                     LastName = registerViewModel.LastName,
                     Email = registerViewModel.Email,
-                    UserName = registerViewModel.Email,
+                    UserName = registerViewModel.Username,
                     PhoneNumber = registerViewModel.PhoneNumber
                 };
 
@@ -60,13 +62,17 @@ namespace SportStore.WebUI.Controllers
             return View(registerViewModel);
         }
 
-        [HttpGet("/login")]
+        [HttpGet]
+        [Route("Login")]
+        [Route("Account/Login")]
         public IActionResult Login(string returnUrl = null)
         {
             return View(new LoginViewModel { ReturnUrl = returnUrl});
         }
 
-        [HttpPost("/login")]
+        [HttpPost]
+        [Route("Login")]
+        [Route("Account/Login")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
@@ -100,6 +106,12 @@ namespace SportStore.WebUI.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
