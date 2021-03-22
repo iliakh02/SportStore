@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SportStore.Data;
 using SportStore.Data.Abstract;
@@ -24,7 +25,6 @@ namespace SportStore.WebUI.Controllers
 
         public IActionResult Index()
         {
-            var r = userRepository.GetAll();
             return View();
         }
 

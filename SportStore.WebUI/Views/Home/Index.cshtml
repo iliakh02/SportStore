@@ -1,4 +1,5 @@
 ﻿@{
+    Layout = (User.Identity.IsAuthenticated && User.IsInRole("Administrator")) ? "_AdminLayout" : "_Layout";
     ViewData["Title"] = "Home Page";
 }
 
