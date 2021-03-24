@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using SportStore.Models.Entities;
 using SportStore.WebUI.Areas.Admin.Models;
 using SportStore.WebUI.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +16,9 @@ namespace SportStore.WebUI.Areas.Admin.Controllers
     {
         UserManager<User> _userManager;
         RoleManager<IdentityRole<int>> _roleManager;
+
+        public int PageSize { get; } = 4;
+
         public UsersController(UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager)
         {
             _userManager = userManager;
@@ -41,9 +43,8 @@ namespace SportStore.WebUI.Areas.Admin.Controllers
                 _ => users.OrderBy(n => n.Id),
             };
             
-            int pageSize = 4;
             List<string> rolesPerPage = new List<string>();
-            List<User> usersPerPage = sortUsers.ToList().Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            List<User> usersPerPage = sortUsers.ToList().Skip((page - 1) * PageSize).Take(PageSize).ToList();
             foreach (var user in usersPerPage)
             {
                 var rolesPerUser = await _userManager.GetRolesAsync(user);
@@ -55,7 +56,7 @@ namespace SportStore.WebUI.Areas.Admin.Controllers
                 Users = usersPerPage,
                 Roles = rolesPerPage,
                 SortViewModel = new UsersSortViewModel(sortOrder),
-                PageModel = new PageViewModel(_userManager.Users.Count(), page, pageSize)
+                PageModel = new PageViewModel(_userManager.Users.Count(), page, PageSize)
             };
 
             return View(usersViewModel);
