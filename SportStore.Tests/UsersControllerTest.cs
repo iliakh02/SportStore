@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SportStore.Models.Entities;
+using SportStore.Tests.FakeManagers;
 using SportStore.WebUI.Areas.Admin.Controllers;
 using SportStore.WebUI.Areas.Admin.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,22 +31,19 @@ namespace SportStore.Tests
                 new User { Id = 13, Email = "test13@test.it", FirstName = "User6", LastName = "User6_1"}
             };
 
-        public UsersController InitializeUserController(int userId = 1)
+        private UsersController InitializeUserController(int userId = 1)
         {
-            var store = new Mock<IUserStore<User>>();
-            var mockUserManager = new Mock<UserManager<User>>(store.Object, null, null, null, null, null, null, null, null);
+            var mockUserManager = new Mock<FakeUserManager>();
+            var mockRoleManager = new Mock<FakeRoleManager>();
 
-
-            mockUserManager.Setup(userManager => userManager.Users).Returns(expectedUsers.AsQueryable());
+            mockUserManager.Setup(userManager => userManager.Users)
+                .Returns(expectedUsers.AsQueryable());
             mockUserManager.Setup(userManager => userManager.FindByIdAsync(It.IsAny<string>())).Returns(Task.FromResult((userId > 0 && userId <= expectedUsers.Count()) ? expectedUsers[userId - 1] : null));
             IList<string> expectedRolesPerUser = new List<string> { "Administrator", "User" };
             mockUserManager.Setup(userManager => userManager.GetRolesAsync(It.IsAny<User>())).Returns(Task.FromResult(expectedRolesPerUser));
 
-            var roleStore = new Mock<IRoleStore<IdentityRole<int>>>();
-            IQueryable<IdentityRole<int>> expectedRoles = new List<IdentityRole<int>> { }.AsQueryable();
-            var mockRoleManager = new Mock<RoleManager<IdentityRole<int>>>(roleStore.Object, null, null, null, null);
-
-            mockRoleManager.Setup(roleManager => roleManager.Roles).Returns(expectedRoles);
+            mockRoleManager.Setup(roleManager => roleManager.Roles)
+                .Returns(new List<IdentityRole<int>> { }.AsQueryable());
 
             var userController = new UsersController(mockUserManager.Object, mockRoleManager.Object);
 
@@ -117,7 +114,33 @@ namespace SportStore.Tests
             var userController = InitializeUserController(userId);
 
             // Act
-            var result = userController.Edit(userId, new List<string> { "Administrator", "User" });
+            var result = userController.Edit(new UserEditViewModel
+            {
+                User = new User
+                {
+                    Id = 1,
+                    FirstName = "q",
+                    LastName = "w",
+                    Email = "test123@test.it"
+                },
+                ActiveRoles = new List<string>
+                {
+                    "User"
+                },
+                AllRoles = new List<IdentityRole<int>>
+                {
+                    new IdentityRole<int>
+                    {
+                        Id = 1,
+                        Name = "Admin"
+                    },
+                    new IdentityRole<int>
+                    {
+                        Id = 2,
+                        Name = "User"
+                    }
+                }
+            });
 
             // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result.Result);
@@ -133,7 +156,33 @@ namespace SportStore.Tests
             var userController = InitializeUserController(userId);
 
             // Act
-            var result = userController.Edit(userId, new List<string> { "Administrator", "User" });
+            var result = userController.Edit(new UserEditViewModel
+            {
+                User = new User
+                {
+                    Id = 1,
+                    FirstName = "q",
+                    LastName = "w",
+                    Email = "test123@test.it"
+                },
+                ActiveRoles = new List<string>
+                {
+                    "User"
+                },
+                AllRoles = new List<IdentityRole<int>>
+                {
+                    new IdentityRole<int>
+                    {
+                        Id = 1,
+                        Name = "Admin"
+                    },
+                    new IdentityRole<int>
+                    {
+                        Id = 2,
+                        Name = "User"
+                    }
+                }
+            });
 
             // Assert
             Assert.IsType<NotFoundResult>(result.Result);

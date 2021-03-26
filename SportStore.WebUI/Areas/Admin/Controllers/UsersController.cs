@@ -82,19 +82,25 @@ namespace SportStore.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int userId, List<string> roles)
+        public async Task<IActionResult> Edit(UserEditViewModel model)
         {
-            User user = await _userManager.FindByIdAsync(userId.ToString());
+            User user = await _userManager.FindByIdAsync(model.User.Id.ToString());
 
             if (user == null)
                 return NotFound();
 
+            user.FirstName = model.User.FirstName;
+            user.LastName = model.User.LastName;
+            user.Email = model.User.Email;
+            user.PhoneNumber = model.User.PhoneNumber;
+
             var userRoles = await _userManager.GetRolesAsync(user);
-            var addedRoles = roles.Except(userRoles);
-            var removedRoles = userRoles.Except(roles);
+            var addedRoles = model.ActiveRoles.Except(userRoles);
+            var removedRoles = userRoles.Except(model.ActiveRoles);
 
             await _userManager.AddToRolesAsync(user, addedRoles);
             await _userManager.RemoveFromRolesAsync(user, removedRoles);
+            await _userManager.UpdateAsync(user);
 
             return RedirectToAction("Index");
         }

@@ -10,7 +10,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div>
                     <div class="form-group">
-                        <input type="hidden" name="userId" value="@Model.User.Id" />
+                        <input type="hidden" asp-for="User.Id" value="@Model.User.Id" />
                     </div>
                     <div class="form-group">
                         <label asp-for="User.FirstName"></label><br />
@@ -36,7 +36,7 @@
                     <div>
                         @foreach (var role in Model.AllRoles)
                         {
-                            <input type="checkbox" name="roles" value="@role.Name" @(Model.ActiveRoles.Contains(role.Name) ? "checked=\"checked\"" : "") /> @role.Name <br />
+                            <input type="checkbox" name="activeRoles" value="@role.Name" @(Model.ActiveRoles.Contains(role.Name) ? "checked=\"checked\"" : "") /> @role.Name <br />
                         }
                     </div>
                     <div class="form-group">
