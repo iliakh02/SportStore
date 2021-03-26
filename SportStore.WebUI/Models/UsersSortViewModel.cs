@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SportStore.WebUI.Areas.Admin.Models
+namespace SportStore.WebUI.Models
 {
     public class UsersSortViewModel
     {
