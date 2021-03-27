@@ -12,9 +12,9 @@ using Xunit;
 
 namespace SportStore.Tests
 {
-    public class UsersControllerTest
+    public class UsersControllerTests
     {
-        List<User> expectedUsers = new List<User>
+        private List<User> _expectedUsers = new List<User>
             {
                 new User { Id = 1, Email = "test1@test.it", FirstName = "User1", LastName = "User1_1"},
                 new User { Id = 2, Email = "test2@test.it", FirstName = "User2", LastName = "User2_1"},
@@ -37,10 +37,12 @@ namespace SportStore.Tests
             var mockRoleManager = new Mock<FakeRoleManager>();
 
             mockUserManager.Setup(userManager => userManager.Users)
-                .Returns(expectedUsers.AsQueryable());
-            mockUserManager.Setup(userManager => userManager.FindByIdAsync(It.IsAny<string>())).Returns(Task.FromResult((userId > 0 && userId <= expectedUsers.Count()) ? expectedUsers[userId - 1] : null));
+                .Returns(_expectedUsers.AsQueryable());
+            mockUserManager.Setup(userManager => userManager.FindByIdAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult((userId > 0 && userId <= _expectedUsers.Count()) ? _expectedUsers[userId - 1] : null));
             IList<string> expectedRolesPerUser = new List<string> { "Administrator", "User" };
-            mockUserManager.Setup(userManager => userManager.GetRolesAsync(It.IsAny<User>())).Returns(Task.FromResult(expectedRolesPerUser));
+            mockUserManager.Setup(userManager => userManager.GetRolesAsync(It.IsAny<User>()))
+                .Returns(Task.FromResult(expectedRolesPerUser));
 
             mockRoleManager.Setup(roleManager => roleManager.Roles)
                 .Returns(new List<IdentityRole<int>> { }.AsQueryable());
@@ -66,9 +68,9 @@ namespace SportStore.Tests
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result.Result);
 
-            Assert.Equal((pageNumber * usersController.PageSize <= expectedUsers.Count())? 
+            Assert.Equal((pageNumber * usersController.PageSize <= _expectedUsers.Count())? 
                 usersController.PageSize 
-                : expectedUsers.Count() - (pageNumber - 1) * usersController.PageSize
+                : _expectedUsers.Count() - (pageNumber - 1) * usersController.PageSize
                 , (viewResult?.Model as UsersViewModel).Users.Count);
         }
 
@@ -87,7 +89,7 @@ namespace SportStore.Tests
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result.Result);
 
-            Assert.Equal(expectedUsers[userId - 1].Id, (viewResult?.Model as UserEditViewModel).User.Id);
+            Assert.Equal(_expectedUsers[userId - 1].Id, (viewResult?.Model as UserEditViewModel).User.Id);
         }
 
         [Theory]

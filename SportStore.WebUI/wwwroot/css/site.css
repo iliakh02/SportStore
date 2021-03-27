@@ -189,3 +189,7 @@ input.text-light:focus, input.text-light:hover {
     left: calc(50% - 33px);
     top: 62%;
 }
+
+.btn-max-width {
+    width: 65px; 
+}

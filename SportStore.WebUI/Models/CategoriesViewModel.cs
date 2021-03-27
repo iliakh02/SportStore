@@ -11,5 +11,6 @@ namespace SportStore.WebUI.Models
         public List<Category> Categories { get; set; }
         public CategoriesSortViewModel SortViewModel { get; set; }
         public PageViewModel PageModel { get; set; }
+        public string SearchString { get; set; }
     }
 }

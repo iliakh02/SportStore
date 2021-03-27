@@ -9,8 +9,8 @@ namespace SportStore.WebUI.TagHelpers
 {
     public class SortHeaderTagHelper : TagHelper
     {
-        public UsersSortState Property { get; set; }
-        public UsersSortState Current { get; set; }
+        public object Property { get; set; }
+        public object Current { get; set; }
         public string Action { get; set; }
 
         private IUrlHelperFactory urlHelperFactory;

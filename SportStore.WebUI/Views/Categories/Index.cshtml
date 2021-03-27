@@ -1,14 +1,17 @@
 ﻿@model CategoriesViewModel
-
 @{
     Layout = "_AdminLayout";
 }
 
-
 <div class="bg-light p-2 shadow">
-    <div>
-        <a asp-controller="Categories" asp-action="Create" class="btn btn-outline-primary">Create</a>
+    <div class="d-flex justify-content-between align-middle">
+        <form method="get" asp-controller="Categories" asp-action="Index">
+            <input type="text" name="searchString" placeholder="Search"/>
+            <input type="submit" value="Search" class="btn btn-primary"/>
+        </form>
+        <a asp-controller="Categories" asp-action="Create" class="btn btn-primary">Create</a>
     </div>
+    <br />  
     <table class="table table-striped table-hover">
         <thead class="thead-dark">
             <tr>
@@ -29,11 +32,11 @@
                 <tr scope="row">
                     <td class="align-middle">@Model.Categories[i].Id</td>
                     <td class="align-middle">@Model.Categories[i].Name</td>
-                    <td>
-                        <a asp-route-userId="@Model.Categories[i].Id" asp-controller="Users" asp-action="Edit" class="btn btn-primary glyphicon glyphicon-pencil"></a>
+                    <td class="btn-max-width">
+                        <a asp-route-id="@Model.Categories[i].Id" asp-controller="Categories" asp-action="Edit" class="btn btn-primary glyphicon glyphicon-pencil"></a>
                     </td>
-                    <td>
-                        <form method="post" asp-route-id="@Model.Categories[i].Id" asp-controller="Users" asp-action="Delete">
+                    <td class="btn-max-width">
+                        <form method="post" asp-route-id="@Model.Categories[i].Id" asp-controller="Categories" asp-action="Delete">
                             <button type="submit" value=" " class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
                         </form>
                     </td>
@@ -45,5 +48,5 @@
 <br />
 <br />
 
-<page-link page-model="Model.PageModel" page-action="Index" sort-order="@Model.SortViewModel.Current"></page-link>
+<page-link page-model="Model.PageModel" page-action="Index" sort-order="@Model.SortViewModel.Current" search-string="@Model.SearchString"></page-link>
 
