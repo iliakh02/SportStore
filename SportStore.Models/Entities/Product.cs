@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SportStore.Models.Entities
 {
@@ -11,6 +12,9 @@ namespace SportStore.Models.Entities
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        [Required]
+        [Column(TypeName = "image")]
+        public byte[] Picture { get; set; }
         [Required]
         public string Producer { get; set; }
         [Required]
