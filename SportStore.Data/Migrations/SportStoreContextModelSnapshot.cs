@@ -51,14 +51,14 @@ namespace SportStore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "37aa5a08-7372-4d5b-bbd5-4e23f7d373d6",
+                            ConcurrencyStamp = "57e034c5-d1da-4035-ad7d-1307b7bb6f8f",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "559080c4-4b16-4450-a4df-899ee93ea8b0",
+                            ConcurrencyStamp = "10bcfa99-9314-403d-b37b-851d6b30e952",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -283,13 +283,13 @@ namespace SportStore.Data.Migrations
                     b.Property<double>("Discount")
                         .HasColumnType("float");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Picture")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("image");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,4)");
@@ -409,13 +409,13 @@ namespace SportStore.Data.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "895643be-fd81-419f-a127-6404bcb89a27",
+                            ConcurrencyStamp = "84bae60e-1867-4fe4-99ca-722d2fb65aa9",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDUc/1v9VLDsJlIhbMyfE/ogws2eO+28kr7Ndy5e0AY+W0hOgo3hzAJCpbioGsAW8w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJjSVSIH2UKXX0h/TYLqDBTFZa88pEmXEWZCKOvvBOWuBEgLcmJX9HdA9EMTClyO2w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f0f9fb53-e6e0-431d-b866-d70fe80840fd",
+                            SecurityStamp = "75ed64b3-cade-451d-a597-1dfdf41a1e27",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });

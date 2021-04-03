@@ -193,3 +193,9 @@ input.text-light:focus, input.text-light:hover {
 .btn-max-width {
     width: 65px; 
 }
+
+img#product-image {
+    max-width: 200px;
+    max-height: 150px;
+    /* margin: 5px auto; */
+}

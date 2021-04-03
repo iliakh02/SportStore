@@ -1,0 +1,67 @@
+﻿@model ProductEditViewModel
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="authentication-form-block">
+    <div class="authentication-form">
+        <div class="p-3 d-flex flex-column">
+            <h2 class="text-center">Create new category</h2>
+
+            <form method="post" asp-controller="Products" asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div>
+                    <input type="hidden" asp-for="ImagePath" value="@Model.ImagePath" />
+                    <input type="hidden" asp-for="Id" value="@Model.Id" />
+
+                    <div class="form-group">
+                        <label asp-for="Name"></label><br />
+                        <input type="text" asp-for="Name" class="w-100" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Amount"></label><br />
+                        <input type="text" asp-for="Amount" class="w-100" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CategoryId">Category</label><br />
+                        <select asp-for="CategoryId" asp-items="@Model.Categories" class="w-100"> </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description"></label><br />
+                        <textarea asp-for="Description" class="w-100"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Discount"></label><br />
+                        <input  asp-for="Discount" class="w-100" />
+                        <span asp-validation-for="Discount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-flex flex-column align-items-center">
+                        <label asp-for="Image" class="w-100"></label><br />
+                        <input type="file" asp-for="Image" accept="image/*" value="@Model.Image" class="w-100" onchange="readURL(this);" /><br />
+                        <img src="@Model.ImagePath" alt="Model.Name" id="product-image" class="center"/>
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Producer"></label><br />
+                        <input type="text" asp-for="Producer" class="w-100" />
+                        <span asp-validation-for="Producer" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price"></label><br />
+                        <input asp-for="Price" class="w-100" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Save changes" class="center-block btn-primary btn-lg" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
