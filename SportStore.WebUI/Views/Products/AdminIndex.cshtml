@@ -48,7 +48,7 @@
                     <a asp-route-id="@Model.Products[i].Id" asp-controller="Products" asp-action="Edit" class="btn btn-primary glyphicon glyphicon-pencil"></a>
                 </td>
                 <td class="btn-max-width">
-                    <form method="post" asp-route-id="@Model.Products[i].Id" asp-controller="Products" asp-action="Delete">
+                    <form method="post" asp-route-id="@Model.Products[i].Id" asp-controller="Products" asp-action="Delete" asp-route-queries="@(Context.Request.QueryString.ToUriComponent())" asp-route-pageSize="@Model.Products.Count()">
                         <button type="submit" value=" " class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
                     </form>
                 </td>

@@ -10,6 +10,8 @@ using SportStore.Data;
 using SportStore.Data.Abstract;
 using SportStore.Data.Repositories;
 using SportStore.Models.Entities;
+using SportStore.WebUI.Interfaces;
+using SportStore.WebUI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +42,8 @@ namespace SportStore.WebUI
             services.AddTransient<IProductOrderRepository, ProductOrderRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
+
+            services.AddTransient<IUrlService, UrlService>();
 
             services.AddControllersWithViews();
         }

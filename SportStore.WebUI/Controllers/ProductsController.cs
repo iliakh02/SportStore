@@ -5,27 +5,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SportStore.Data.Abstract;
 using SportStore.Models.Entities;
+using SportStore.WebUI.Interfaces;
 using SportStore.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web;
 
 namespace SportStore.WebUI.Controllers
 {
     public class ProductsController : Controller
     {
-        private IProductRepository _productRepository;
-        private ICategoryRepository _categoryRepository;
-        private IWebHostEnvironment _webHostEnvironment;
+        private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IUrlService _urlService;
 
         public int PageSize { get; } = 4;
 
-        public ProductsController(IProductRepository productRepository, ICategoryRepository categoryRepository, IWebHostEnvironment webHostEnvironment)
+        public ProductsController(IProductRepository productRepository, ICategoryRepository categoryRepository, IWebHostEnvironment webHostEnvironment, IUrlService urlService)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
             _webHostEnvironment = webHostEnvironment;
+            _urlService = urlService;
         }
 
         public IActionResult Index(string searchString, int page = 1, ProductsSortState sortOrder = ProductsSortState.IdAsc)
@@ -198,8 +202,10 @@ namespace SportStore.WebUI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, int pageSize, string queries)
         {
+            string redirectUrl = _urlService.ReditectUrlForDelete(id, pageSize, queries);
+
             var product = _productRepository.GetById(id);
 
             if (product == null)
@@ -208,7 +214,7 @@ namespace SportStore.WebUI.Controllers
             _productRepository.Delete(product);
             _productRepository.Commit();
 
-            return RedirectToAction("Index");
+            return Redirect(redirectUrl);
         }
     }
 }

@@ -13,10 +13,10 @@ namespace SportStore.WebUI.TagHelpers
 {
     public class PageLinkTagHelper : TagHelper
     {
-        private IUrlHelperFactory urlHelperFactory;
+        private IUrlHelperFactory _urlHelperFactory;
         public PageLinkTagHelper(IUrlHelperFactory helperFactory)
         {
-            urlHelperFactory = helperFactory;
+            _urlHelperFactory = helperFactory;
         }
 
         [ViewContext]
@@ -32,7 +32,7 @@ namespace SportStore.WebUI.TagHelpers
             if (PageModel.TotalPages == 1)
                 return;
 
-            IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
+            IUrlHelper urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
             output.TagName = "div";
 
             TagBuilder tag = new TagBuilder("ul");

@@ -47,7 +47,7 @@ namespace SportStore.Tests
             mockRoleManager.Setup(roleManager => roleManager.Roles)
                 .Returns(new List<IdentityRole<int>> { }.AsQueryable());
 
-            var userController = new UsersController(mockUserManager.Object, mockRoleManager.Object);
+            var userController = new UsersController(mockUserManager.Object, mockRoleManager.Object, null);
 
             return userController;
         }

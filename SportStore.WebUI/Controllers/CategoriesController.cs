@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using SportStore.Data.Abstract;
 using SportStore.Models.Entities;
+using SportStore.WebUI.Interfaces;
 using SportStore.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace SportStore.WebUI.Controllers
 {
@@ -14,11 +16,13 @@ namespace SportStore.WebUI.Controllers
     public class CategoriesController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IUrlService _urlService;
         public int PageSize { get; } = 4;
 
-        public CategoriesController(ICategoryRepository categoryRepository)
+        public CategoriesController(ICategoryRepository categoryRepository, IUrlService urlService)
         {
             _categoryRepository = categoryRepository;
+            _urlService = urlService;
         }
 
         [HttpGet]
@@ -95,8 +99,10 @@ namespace SportStore.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, int pageSize, string queries)
         {
+            string redirectUrl = _urlService.ReditectUrlForDelete(id, pageSize, queries);
+
             var category = _categoryRepository.GetById(id);
             if (category == null)
                 return NotFound();
@@ -104,7 +110,7 @@ namespace SportStore.WebUI.Controllers
             _categoryRepository.Delete(category);
             _categoryRepository.Commit();
 
-            return RedirectToAction("Index");
+            return Redirect(redirectUrl);
         }
     }
 }

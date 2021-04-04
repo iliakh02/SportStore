@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SportStore.Models.Entities;
+using SportStore.WebUI.Interfaces;
 using SportStore.WebUI.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +13,17 @@ namespace SportStore.WebUI.Controllers
     [Authorize(Roles = "Administrator")]
     public class UsersController : Controller
     {
-        UserManager<User> _userManager;
-        RoleManager<IdentityRole<int>> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole<int>> _roleManager;
+        private readonly IUrlService _urlService;
 
         public int PageSize { get; } = 4;
 
-        public UsersController(UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager)
+        public UsersController(UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager, IUrlService urlService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _urlService = urlService;
         }
 
         public async Task<IActionResult> Index(int page = 1, UsersSortState sortOrder = UsersSortState.IdAsc)
@@ -104,8 +107,10 @@ namespace SportStore.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id, int pageSize, string queries)
         {
+            string redirectUrl = _urlService.ReditectUrlForDelete(id, pageSize, queries);
+
             User user = await _userManager.FindByIdAsync(id.ToString());
 
             if (user == null)
@@ -113,7 +118,7 @@ namespace SportStore.WebUI.Controllers
 
             await _userManager.DeleteAsync(user);
 
-            return RedirectToAction("Index");
+            return Redirect(redirectUrl);
         }
     }
 }
