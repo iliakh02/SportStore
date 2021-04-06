@@ -18,6 +18,7 @@
                 <th scope="col">
                     <sort-header action="Index" current="@Model.SortViewModel.Current" property="@Model.SortViewModel.IdSort">Id</sort-header>
                 </th>
+                <th scope="col" class="text-secondary">Image</th>
                 <th scope="col">
                     <sort-header action="Index" current="@Model.SortViewModel.Current" property="@Model.SortViewModel.NameSort">Name</sort-header>
                 </th>
@@ -39,6 +40,7 @@
             {
             <tr scope="row">
                 <td class="align-middle">@Model.Products[i].Id</td>
+                <td class="align-middle"><img src="@Model.Products[i].Image" class="img-icon-admin-product" /></td>
                 <td class="align-middle">@Model.Products[i].Name</td>
                 <td class="align-middle">@Model.Products[i].Amount</td>
                 <td class="align-middle">@Model.Products[i].Producer</td>

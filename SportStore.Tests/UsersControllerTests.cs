@@ -199,7 +199,7 @@ namespace SportStore.Tests
             var userController = InitializeUserController(userId);
 
             // Act
-            var result = userController.Delete(userId);
+            var result = userController.Delete(userId, 1, "");
 
             // Assert
             Assert.IsType<NotFoundResult>(result.Result);
@@ -214,7 +214,7 @@ namespace SportStore.Tests
             var userController = InitializeUserController(userId);
 
             // Act
-            var result = userController.Delete(userId);
+            var result = userController.Delete(userId, 2, "");
 
             // Assert
             var viewResult = Assert.IsType<RedirectToActionResult>(result.Result);

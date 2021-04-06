@@ -1,4 +1,4 @@
-﻿@model ProductEditViewModel
+﻿@model ProductCreateViewModel
 
 @{
     Layout = "_AdminLayout";
@@ -36,13 +36,13 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Discount"></label><br />
-                        <input type="number" asp-for="Discount" step="0.01" class="w-100" />
+                        <input asp-for="Discount" step="0.01" class="w-100" />
                         <span asp-validation-for="Discount" class="text-danger"></span>
                     </div>
                     <div class="form-group d-flex flex-column align-items-center">
                         <label asp-for="Image"></label><br />
                         <input type="file" asp-for="Image" accept="image/*" class="w-100" onchange="readURL(this);" /><br />
-                        <img src="@Model.ImagePath" alt="Model.Name" id="product-image" class="center" />
+                        <img src="#" alt="Model.Name" id="product-image" class="center" />
                         <span asp-validation-for="Image" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -52,7 +52,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Price"></label><br />
-                        <input type="number" asp-for="Price" class="w-100" />
+                        <input asp-for="Price" class="w-100" />
                         <span asp-validation-for="Price" class="text-danger"></span>
                     </div>
 

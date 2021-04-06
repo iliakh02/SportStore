@@ -74,7 +74,7 @@ namespace SportStore.WebUI.Controllers
         public IActionResult Create()
         {
             var categories = _categoryRepository.GetAll();
-            var productCreateViewModel = new ProductEditViewModel
+            var productCreateViewModel = new ProductCreateViewModel
             {
                 Categories = new List<SelectListItem>(
                     categories.Select(n => new SelectListItem {
@@ -210,6 +210,11 @@ namespace SportStore.WebUI.Controllers
 
             if (product == null)
                 return NotFound();
+
+            if(System.IO.File.Exists(_webHostEnvironment.WebRootPath + product.Image))
+            {
+                System.IO.File.Delete(_webHostEnvironment.WebRootPath + product.Image);
+            }
 
             _productRepository.Delete(product);
             _productRepository.Commit();

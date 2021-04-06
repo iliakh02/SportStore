@@ -11,6 +11,10 @@ namespace SportStore.WebUI.Services
     {
         public string ReditectUrlForDelete(int id, int pageSize, string queries)
         {
+            string redirectUrl = @"\Products";
+            if (queries == null)
+                return redirectUrl;
+
             var nvc = HttpUtility.ParseQueryString(queries);
             List<string> parameters = new List<string>();
             if (nvc.AllKeys.Contains("searchString"))
@@ -23,7 +27,6 @@ namespace SportStore.WebUI.Services
                 parameters.Add($"sortOrder={nvc["sortOrder"]}");
 
             string urlParameters = string.Join("&", parameters);
-            string redirectUrl = @"\Products";
             if (!string.IsNullOrEmpty(urlParameters))
                 redirectUrl += "?";
             redirectUrl += urlParameters;

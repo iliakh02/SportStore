@@ -197,5 +197,9 @@ input.text-light:focus, input.text-light:hover {
 img#product-image {
     max-width: 200px;
     max-height: 150px;
-    /* margin: 5px auto; */
+}
+
+.img-icon-admin-product {
+    max-width: 40px;
+    max-height: 40px;
 }
