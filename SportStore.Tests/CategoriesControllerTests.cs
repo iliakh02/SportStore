@@ -3,6 +3,7 @@ using Moq;
 using SportStore.Data.Abstract;
 using SportStore.Models.Entities;
 using SportStore.WebUI.Controllers;
+using SportStore.WebUI.Interfaces;
 using SportStore.WebUI.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,13 +27,16 @@ namespace SportStore.Tests
         };
         public CategoriesController CategoriesControllerInitializer(int categoryId = 0)
         {
+            var fakeUrlService = new Mock<IUrlService>();
             var fakeCategoryRepository = new Mock<ICategoryRepository>();
             fakeCategoryRepository.Setup(categoryRepository => categoryRepository.GetAll())
                 .Returns(_categories);
             fakeCategoryRepository.Setup(categoryRepository => categoryRepository.GetById(It.IsAny<int>()))
                 .Returns(_categories.FirstOrDefault(n => n.Id == categoryId));
 
-            var categoriesController = new CategoriesController(fakeCategoryRepository.Object);
+            fakeUrlService.Setup(urlService => urlService.ReditectUrlForDelete(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(@"\TestController");
+            var categoriesController = new CategoriesController(fakeCategoryRepository.Object, fakeUrlService.Object);
 
             return categoriesController;
         }

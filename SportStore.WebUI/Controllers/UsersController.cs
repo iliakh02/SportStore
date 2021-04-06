@@ -109,7 +109,7 @@ namespace SportStore.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id, int pageSize, string queries)
         {
-            string redirectUrl = _urlService.ReditectUrlForDelete(id, pageSize, queries);
+            string redirectUrl = _urlService.ReditectUrlForDelete(pageSize, queries, "Users");
 
             User user = await _userManager.FindByIdAsync(id.ToString());
 

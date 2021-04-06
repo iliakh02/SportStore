@@ -204,7 +204,7 @@ namespace SportStore.WebUI.Controllers
         [Authorize(Roles = "Administrator")]
         public IActionResult Delete(int id, int pageSize, string queries)
         {
-            string redirectUrl = _urlService.ReditectUrlForDelete(id, pageSize, queries);
+            string redirectUrl = _urlService.ReditectUrlForDelete(pageSize, queries, "Categories");
 
             var product = _productRepository.GetById(id);
 

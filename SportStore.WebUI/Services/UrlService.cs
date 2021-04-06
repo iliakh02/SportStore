@@ -9,9 +9,9 @@ namespace SportStore.WebUI.Services
 {
     public class UrlService : IUrlService
     {
-        public string ReditectUrlForDelete(int id, int pageSize, string queries)
+        public string ReditectUrlForDelete(int pageSize, string queries, string controller)
         {
-            string redirectUrl = @"\Products";
+            string redirectUrl = $"\\{controller}";
             if (queries == null)
                 return redirectUrl;
 

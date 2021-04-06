@@ -4,6 +4,7 @@ using Moq;
 using SportStore.Models.Entities;
 using SportStore.Tests.FakeManagers;
 using SportStore.WebUI.Controllers;
+using SportStore.WebUI.Interfaces;
 using SportStore.WebUI.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,7 @@ namespace SportStore.Tests
         {
             var mockUserManager = new Mock<FakeUserManager>();
             var mockRoleManager = new Mock<FakeRoleManager>();
+            var fakeUrlService = new Mock<IUrlService>();
 
             mockUserManager.Setup(userManager => userManager.Users)
                 .Returns(_expectedUsers.AsQueryable());
@@ -47,7 +49,10 @@ namespace SportStore.Tests
             mockRoleManager.Setup(roleManager => roleManager.Roles)
                 .Returns(new List<IdentityRole<int>> { }.AsQueryable());
 
-            var userController = new UsersController(mockUserManager.Object, mockRoleManager.Object, null);
+            fakeUrlService.Setup(urlService => urlService.ReditectUrlForDelete(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(@"\TestController");
+
+            var userController = new UsersController(mockUserManager.Object, mockRoleManager.Object, fakeUrlService.Object);
 
             return userController;
         }
@@ -214,11 +219,11 @@ namespace SportStore.Tests
             var userController = InitializeUserController(userId);
 
             // Act
-            var result = userController.Delete(userId, 2, "");
+            var result = userController.Delete(userId, 1, "");
 
             // Assert
-            var viewResult = Assert.IsType<RedirectToActionResult>(result.Result);
-            Assert.Equal("Index", viewResult?.ActionName);
+            var viewResult = Assert.IsType<RedirectResult>(result.Result);
+            Assert.Equal(@"\TestController", viewResult?.Url);
         }
     }
 }

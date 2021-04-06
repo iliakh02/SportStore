@@ -7,6 +7,6 @@ namespace SportStore.WebUI.Interfaces
 {
     public interface IUrlService
     {
-        string ReditectUrlForDelete(int id, int pageSize, string queries);
+        string ReditectUrlForDelete(int pageSize, string queries, string controller);
     }
 }
