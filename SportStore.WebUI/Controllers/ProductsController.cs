@@ -131,6 +131,10 @@ namespace SportStore.WebUI.Controllers
         public IActionResult Edit(int id)
         {
             var product = _productRepository.GetById(id);
+
+            if (product == null)
+                return NotFound();
+
             var categories = _categoryRepository.GetAll();
             var productEditViewModel = new ProductEditViewModel
             {
