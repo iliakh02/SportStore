@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SportStore.Models.Entities
 {
-    public class Cart : IEntityBase
+    public class CartItem : IEntityBase
     {
         public int Id { get; set; }
 

@@ -67,13 +67,18 @@ namespace SportStore.WebUI.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            if (category == null)
-                return NotFound();
+            if(ModelState.IsValid)
+            { 
+                if (category == null)
+                    return NotFound();
 
-            _categoryRepository.Add(category);
-            _categoryRepository.Commit();
+                _categoryRepository.Add(category);
+                _categoryRepository.Commit();
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            return View(category);
         }
 
         [HttpGet]
@@ -89,13 +94,18 @@ namespace SportStore.WebUI.Controllers
         [HttpPost]
         public IActionResult Edit(Category category)
         {
-            if (category == null)
-                return NotFound();
+            if (ModelState.IsValid)
+            {
+                if (category == null)
+                    return NotFound();
 
-            _categoryRepository.Update(category);
-            _categoryRepository.Commit();
+                _categoryRepository.Update(category);
+                _categoryRepository.Commit();
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            return View(category);
         }
 
         [HttpPost]

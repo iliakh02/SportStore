@@ -85,25 +85,30 @@ namespace SportStore.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(UserEditViewModel model)
         {
-            User user = await _userManager.FindByIdAsync(model.User.Id.ToString());
 
-            if (user == null)
-                return NotFound();
+            if (ModelState.IsValid)
+            {
+                User user = await _userManager.FindByIdAsync(model.User.Id.ToString());
 
-            user.FirstName = model.User.FirstName;
-            user.LastName = model.User.LastName;
-            user.Email = model.User.Email;
-            user.PhoneNumber = model.User.PhoneNumber;
+                if (user == null)
+                    return NotFound();
 
-            var userRoles = await _userManager.GetRolesAsync(user);
-            var addedRoles = model.ActiveRoles.Except(userRoles);
-            var removedRoles = userRoles.Except(model.ActiveRoles);
+                user.FirstName = model.User.FirstName;
+                user.LastName = model.User.LastName;
+                user.Email = model.User.Email;
+                user.PhoneNumber = model.User.PhoneNumber;
 
-            await _userManager.AddToRolesAsync(user, addedRoles);
-            await _userManager.RemoveFromRolesAsync(user, removedRoles);
-            await _userManager.UpdateAsync(user);
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var addedRoles = model.ActiveRoles.Except(userRoles);
+                var removedRoles = userRoles.Except(model.ActiveRoles);
 
-            return RedirectToAction("Index");
+                await _userManager.AddToRolesAsync(user, addedRoles);
+                await _userManager.RemoveFromRolesAsync(user, removedRoles);
+                await _userManager.UpdateAsync(user);
+
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
 
         [HttpPost]

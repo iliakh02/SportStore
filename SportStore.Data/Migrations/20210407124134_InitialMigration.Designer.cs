@@ -10,8 +10,8 @@ using SportStore.Data;
 namespace SportStore.Data.Migrations
 {
     [DbContext(typeof(SportStoreContext))]
-    [Migration("20210328090420_UpdateProduct")]
-    partial class UpdateProduct
+    [Migration("20210407124134_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,14 +53,14 @@ namespace SportStore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "37aa5a08-7372-4d5b-bbd5-4e23f7d373d6",
+                            ConcurrencyStamp = "9f015d06-1d74-46d2-997a-7c266a9557ce",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "559080c4-4b16-4450-a4df-899ee93ea8b0",
+                            ConcurrencyStamp = "e9598e80-1170-43ad-8753-5566d3cd4d65",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -179,7 +179,7 @@ namespace SportStore.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SportStore.Models.Entities.Cart", b =>
+            modelBuilder.Entity("SportStore.Models.Entities.CartItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -285,16 +285,16 @@ namespace SportStore.Data.Migrations
                     b.Property<double>("Discount")
                         .HasColumnType("float");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Picture")
-                        .IsRequired()
-                        .HasColumnType("image");
-
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Producer")
                         .IsRequired()
@@ -411,13 +411,13 @@ namespace SportStore.Data.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "895643be-fd81-419f-a127-6404bcb89a27",
+                            ConcurrencyStamp = "a1b34401-7b0c-487e-93c6-44271e6433da",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDUc/1v9VLDsJlIhbMyfE/ogws2eO+28kr7Ndy5e0AY+W0hOgo3hzAJCpbioGsAW8w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE8mGEf5LU2pXFsA6eWrArfuWyGc3x0eOqqJ0ksIIsTquWu+sX+h0ElqpyItV0EgXw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f0f9fb53-e6e0-431d-b866-d70fe80840fd",
+                            SecurityStamp = "3ce78694-da15-47a2-9232-6de9535c8460",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -474,16 +474,16 @@ namespace SportStore.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SportStore.Models.Entities.Cart", b =>
+            modelBuilder.Entity("SportStore.Models.Entities.CartItem", b =>
                 {
                     b.HasOne("SportStore.Models.Entities.Product", "Product")
-                        .WithMany("Carts")
+                        .WithMany("CartItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SportStore.Models.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Cart")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -559,13 +559,15 @@ namespace SportStore.Data.Migrations
 
             modelBuilder.Entity("SportStore.Models.Entities.Product", b =>
                 {
-                    b.Navigation("Carts");
+                    b.Navigation("CartItems");
 
                     b.Navigation("ProductOrders");
                 });
 
             modelBuilder.Entity("SportStore.Models.Entities.User", b =>
                 {
+                    b.Navigation("Cart");
+
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618

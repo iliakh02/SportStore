@@ -71,6 +71,7 @@ namespace SportStore.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             var categories = _categoryRepository.GetAll();

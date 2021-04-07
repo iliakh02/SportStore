@@ -2,7 +2,7 @@
 
 namespace SportStore.Data.Abstract
 {
-    public interface ICartRepository : IEntityBaseRepository<Cart> { }
+    public interface ICartRepository : IEntityBaseRepository<CartItem> { }
     public interface ICategoryRepository : IEntityBaseRepository<Category> { }
     public interface IOrderRepository : IEntityBaseRepository<Order> { }
     public interface IProductOrderRepository : IEntityBaseRepository<ProductOrder> { }

@@ -14,5 +14,6 @@ namespace SportStore.Models.Entities
         public string LastName { get; set; }
 
         public ICollection<Order> Orders { get; set; }
+        public ICollection<CartItem> Cart { get; set; }
     }
 }

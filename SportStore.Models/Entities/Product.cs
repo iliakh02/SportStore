@@ -30,7 +30,7 @@ namespace SportStore.Models.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
-        public ICollection<Cart> Carts { get; set; }
+        public ICollection<CartItem> CartItems { get; set; }
         public ICollection<ProductOrder> ProductOrders { get; set; }
     }
 }
