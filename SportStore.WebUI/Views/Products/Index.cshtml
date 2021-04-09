@@ -1,0 +1,36 @@
+﻿@model List<SportStore.Models.Entities.Product>
+
+
+<div class="w-100 shadow bg-white p-3">
+    <div class="w-100 d-flex align-items-baseline justify-content-between">
+        <form action="Index">
+            <input type="text" name="searchString" placeholder="Search">
+            <input type="submit" value="Search" class="btn btn-primary">
+        </form>
+        <form action="Index">
+            <select name="" id="" aria-placeholder="Category"></select>
+            <input type="submit" value="Filter" class="btn btn-primary">
+        </form>
+    </div>
+    <br>
+    <div class="products-list">
+        @foreach (var product in Model)
+        {
+            <div class="product-item shadow p-2 d-flex flex-column align-items-center border position-relative">
+                <a href="#" class="product-item-img" >
+                    <img src="@product.Image" alt="@product.Name" class="mw-100 mh-100">
+                </a>
+                <div>
+                    <h3 class="w-100">@product.Name</h3>
+                    <div class="w-100 d-flex justify-content-between position-absolute fixed-bottom p-3">
+
+                        <h4 class="mr-auto"><b>@product.Price грн.</b></h4>
+                        <form action="" method="post">
+                            <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-shopping-cart"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

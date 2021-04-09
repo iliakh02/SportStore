@@ -67,7 +67,10 @@ namespace SportStore.WebUI.Controllers
                 PageModel = new PageViewModel(products.Count(), page, PageSize),
                 SearchString = searchString
             };
-            return View("AdminIndex", productsViewModel);
+            if(User.IsInRole("Administrator"))
+                return View("AdminIndex", productsViewModel);
+
+            return View("Index", products);
         }
 
         [HttpGet]
