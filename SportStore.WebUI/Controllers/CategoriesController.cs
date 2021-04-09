@@ -4,11 +4,8 @@ using SportStore.Data.Abstract;
 using SportStore.Models.Entities;
 using SportStore.WebUI.Interfaces;
 using SportStore.WebUI.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace SportStore.WebUI.Controllers
 {

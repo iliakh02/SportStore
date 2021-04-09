@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SportStore.Models
+﻿namespace SportStore.Models
 {
     public interface IEntityBase
     {

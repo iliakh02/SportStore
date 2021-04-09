@@ -1,5 +1,3 @@
-using System;
-
 namespace SportStore.WebUI.Models
 {
     public class ErrorViewModel

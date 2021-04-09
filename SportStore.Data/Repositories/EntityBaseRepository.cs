@@ -1,10 +1,7 @@
 ﻿using SportStore.Data.Abstract;
 using SportStore.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SportStore.Data.Repositories
 {

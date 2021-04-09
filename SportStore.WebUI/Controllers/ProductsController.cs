@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SportStore.Data.Abstract;
 using SportStore.Models.Entities;
 using SportStore.WebUI.Interfaces;
 using SportStore.WebUI.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 
 namespace SportStore.WebUI.Controllers
 {
@@ -22,7 +19,7 @@ namespace SportStore.WebUI.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IUrlService _urlService;
 
-        public int PageSize { get; } = 4;
+        public int PageSize { get; } = 5;
 
         public ProductsController(IProductRepository productRepository, ICategoryRepository categoryRepository, IWebHostEnvironment webHostEnvironment, IUrlService urlService)
         {
@@ -79,7 +76,7 @@ namespace SportStore.WebUI.Controllers
             {
                 Products = productsPerPage,
                 SortViewModel = new ProductsSortViewModel(sortOrder),
-                PageModel = new PageViewModel(products.Count(), page, PageSize),
+                PageModel = new PageViewModel(products.Count, page, PageSize),
                 SearchString = searchString,
                 Categories = selectListCategories,
                 CurrentCategory = category
@@ -187,10 +184,8 @@ namespace SportStore.WebUI.Controllers
                 {
                     path = $"/images/{productEditViewModel.Image.FileName}";
 
-                    using (var fileStream = new FileStream(_webHostEnvironment.WebRootPath + path, FileMode.Create))
-                    {
-                        productEditViewModel.Image.CopyTo(fileStream);
-                    }
+                    using var fileStream = new FileStream(_webHostEnvironment.WebRootPath + path, FileMode.Create);
+                    productEditViewModel.Image.CopyTo(fileStream);
                 }
                 var product = new Product
                 {

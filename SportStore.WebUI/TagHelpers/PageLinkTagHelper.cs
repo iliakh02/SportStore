@@ -4,16 +4,12 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using SportStore.WebUI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SportStore.WebUI.TagHelpers
 {
     public class PageLinkTagHelper : TagHelper
     {
-        private IUrlHelperFactory _urlHelperFactory;
+        private readonly IUrlHelperFactory _urlHelperFactory;
         public PageLinkTagHelper(IUrlHelperFactory helperFactory)
         {
             _urlHelperFactory = helperFactory;
@@ -48,7 +44,7 @@ namespace SportStore.WebUI.TagHelpers
                 TagBuilder link = new TagBuilder("a");
 
                 link.Attributes["href"] = urlHelper.Action(PageAction, new { 
-                    categoryFilter = CategoryFilter,
+                    category = CategoryFilter,
                     searchString = SearchString, 
                     page = PageModel.PageNumber - 1,
                     sortOrder = SortOrder 
@@ -113,7 +109,7 @@ namespace SportStore.WebUI.TagHelpers
                 TagBuilder link = new TagBuilder("a");
 
                 link.Attributes["href"] = urlHelper.Action(PageAction, new { 
-                    categoryFilter = CategoryFilter,
+                    category = CategoryFilter,
                     searchString = SearchString, 
                     page = PageModel.PageNumber + 1,
                     sortOrder = SortOrder 
@@ -140,7 +136,7 @@ namespace SportStore.WebUI.TagHelpers
             else
             {
                 link.Attributes["href"] = urlHelper.Action(PageAction, new { 
-                    categoryFilter = CategoryFilter,
+                    category = CategoryFilter,
                     searchString = SearchString,
                     page = pageNumber, 
                     sortOrder = SortOrder}

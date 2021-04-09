@@ -1,11 +1,5 @@
-﻿using Moq;
-using SportStore.WebUI.Interfaces;
+﻿using SportStore.WebUI.Interfaces;
 using SportStore.WebUI.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace SportStore.Tests

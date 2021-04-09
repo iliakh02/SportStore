@@ -8,6 +8,10 @@
             <input type="submit" value="Search" class="btn btn-primary">
         </form>
         <form asp-controller="Products" asp-action="Index" method="post">
+            <select name="sortOrder"></select>
+            <input type="submit" value="Filter" class="btn btn-primary">
+        </form>
+        <form asp-controller="Products" asp-action="Index" method="post">
             <select name="category" aria-placeholder="Category" asp-items="@Model.Categories"></select>
             <input type="submit" value="Filter" class="btn btn-primary">
         </form>
@@ -16,12 +20,12 @@
     <div class="products-list">
         @foreach (var product in Model.Products)
         {
-            <div class="product-item shadow p-2 d-flex flex-column align-items-center border position-relative">
+            <div class="product-item shadow p-2 d-flex flex-column align-items-center border position-relative @((product.Amount == 0)? "opacity-40" : "")">
                 <a href="#" class="product-item-img">
                     <img src="@product.Image" alt="@product.Name" class="mw-100 mh-100">
                 </a>
                 <div>
-                    <h3 class="w-100">@product.Name</h3>
+                    <a class="w-100 h3">@product.Name</a>
                     <div class="w-100 d-flex justify-content-between position-absolute fixed-bottom p-3">
 
                         <h4 class="mr-auto"><b>@product.Price грн.</b></h4>

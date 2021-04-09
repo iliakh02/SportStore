@@ -1,5 +1,5 @@
-﻿using SportStore.Models.Entities;
-using SportStore.Data.Abstract;
+﻿using SportStore.Data.Abstract;
+using SportStore.Models.Entities;
 
 namespace SportStore.Data.Repositories
 {
