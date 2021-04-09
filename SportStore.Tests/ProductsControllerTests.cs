@@ -86,7 +86,7 @@ namespace SportStore.Tests
             var productsController = InitializeProductsController();
 
             // Act
-            var result = productsController.Index("", pageNumber);
+            var result = productsController.Index("", "", pageNumber);
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);

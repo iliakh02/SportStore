@@ -1,23 +1,23 @@
-﻿@model List<SportStore.Models.Entities.Product>
+﻿@model ProductsViewModel
 
 
 <div class="w-100 shadow bg-white p-3">
     <div class="w-100 d-flex align-items-baseline justify-content-between">
-        <form action="Index">
+        <form asp-controller="Products" asp-action="Index" method="post">
             <input type="text" name="searchString" placeholder="Search">
             <input type="submit" value="Search" class="btn btn-primary">
         </form>
-        <form action="Index">
-            <select name="" id="" aria-placeholder="Category"></select>
+        <form asp-controller="Products" asp-action="Index" method="post">
+            <select name="category" aria-placeholder="Category" asp-items="@Model.Categories"></select>
             <input type="submit" value="Filter" class="btn btn-primary">
         </form>
     </div>
     <br>
     <div class="products-list">
-        @foreach (var product in Model)
+        @foreach (var product in Model.Products)
         {
             <div class="product-item shadow p-2 d-flex flex-column align-items-center border position-relative">
-                <a href="#" class="product-item-img" >
+                <a href="#" class="product-item-img">
                     <img src="@product.Image" alt="@product.Name" class="mw-100 mh-100">
                 </a>
                 <div>
@@ -34,3 +34,8 @@
         }
     </div>
 </div>
+<br />
+<br />
+
+<page-link page-model="Model.PageModel" page-action="Index" sort-order="@Model.SortViewModel.Current" search-string="@Model.SearchString" category-filter="@Model.CurrentCategory"></page-link>
+

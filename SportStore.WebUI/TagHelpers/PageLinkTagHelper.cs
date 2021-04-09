@@ -26,6 +26,7 @@ namespace SportStore.WebUI.TagHelpers
         public string PageAction { get; set; }
         public object SortOrder { get; set; }
         public string SearchString { get; set; }
+        public string CategoryFilter { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -46,7 +47,12 @@ namespace SportStore.WebUI.TagHelpers
                 TagBuilder item = new TagBuilder("li");
                 TagBuilder link = new TagBuilder("a");
 
-                link.Attributes["href"] = urlHelper.Action(PageAction, new { searchString = SearchString, page = PageModel.PageNumber - 1, sortOrder = SortOrder });
+                link.Attributes["href"] = urlHelper.Action(PageAction, new { 
+                    categoryFilter = CategoryFilter,
+                    searchString = SearchString, 
+                    page = PageModel.PageNumber - 1,
+                    sortOrder = SortOrder 
+                });
 
                 item.AddCssClass("page-item");
                 link.AddCssClass("page-link");
@@ -106,7 +112,12 @@ namespace SportStore.WebUI.TagHelpers
                 TagBuilder item = new TagBuilder("li");
                 TagBuilder link = new TagBuilder("a");
 
-                link.Attributes["href"] = urlHelper.Action(PageAction, new { searchString = SearchString, page = PageModel.PageNumber + 1, sortOrder = SortOrder });
+                link.Attributes["href"] = urlHelper.Action(PageAction, new { 
+                    categoryFilter = CategoryFilter,
+                    searchString = SearchString, 
+                    page = PageModel.PageNumber + 1,
+                    sortOrder = SortOrder 
+                });
 
                 item.AddCssClass("page-item");
                 link.AddCssClass("page-link");
@@ -128,7 +139,12 @@ namespace SportStore.WebUI.TagHelpers
             } 
             else
             {
-                link.Attributes["href"] = urlHelper.Action(PageAction, new { searchString = SearchString, page = pageNumber, sortOrder = SortOrder});
+                link.Attributes["href"] = urlHelper.Action(PageAction, new { 
+                    categoryFilter = CategoryFilter,
+                    searchString = SearchString,
+                    page = pageNumber, 
+                    sortOrder = SortOrder}
+                );
             }
 
             item.AddCssClass("page-item");

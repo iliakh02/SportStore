@@ -32,7 +32,7 @@ namespace SportStore.WebUI.Controllers
             _urlService = urlService;
         }
 
-        public IActionResult Index(string searchString, int page = 1, ProductsSortState sortOrder = ProductsSortState.IdAsc)
+        public IActionResult Index(string searchString, string category = "All", int page = 1, ProductsSortState sortOrder = ProductsSortState.IdAsc)
         {
             ViewData["IdSort"] = sortOrder == ProductsSortState.IdAsc ? ProductsSortState.IdDesc : ProductsSortState.IdAsc;
             ViewData["NameSort"] = sortOrder == ProductsSortState.NameAsc ? ProductsSortState.NameDesc : ProductsSortState.NameAsc;
@@ -40,6 +40,21 @@ namespace SportStore.WebUI.Controllers
             ViewData["PriceSort"] = sortOrder == ProductsSortState.PriceAsc ? ProductsSortState.PriceDesc : ProductsSortState.PriceAsc;
 
             var products = _productRepository.GetAll();
+            var categories = _categoryRepository.GetAll();
+            List<SelectListItem> selectListCategories = new List<SelectListItem>(
+                    categories.Select(n => new SelectListItem
+                    {
+                        Value = n.Name,
+                        Text = n.Name
+                    }));
+            selectListCategories.Insert(0, new SelectListItem("All", "All"));
+
+            if(!string.IsNullOrEmpty(category) && category != "All")
+            {
+                var categoryFilter = categories.FirstOrDefault(n => n.Name == category);
+                products = products.Where(n => n.CategoryId == categoryFilter.Id).ToList();
+                selectListCategories.FirstOrDefault(n => n.Text == category).Selected = true;
+            }
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -65,12 +80,12 @@ namespace SportStore.WebUI.Controllers
                 Products = productsPerPage,
                 SortViewModel = new ProductsSortViewModel(sortOrder),
                 PageModel = new PageViewModel(products.Count(), page, PageSize),
-                SearchString = searchString
+                SearchString = searchString,
+                Categories = selectListCategories,
+                CurrentCategory = category
             };
-            if(User.IsInRole("Administrator"))
-                return View("AdminIndex", productsViewModel);
-
-            return View("Index", products);
+           
+            return View((User.IsInRole("Administrator"))? "AdminIndex" : "Index", productsViewModel);
         }
 
         [HttpGet]

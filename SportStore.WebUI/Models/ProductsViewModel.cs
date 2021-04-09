@@ -1,4 +1,5 @@
-﻿using SportStore.Models.Entities;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using SportStore.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace SportStore.WebUI.Models
         public ProductsSortViewModel SortViewModel { get; set; }
         public PageViewModel PageModel { get; set; }
         public string SearchString { get; set; }
+        public List<SelectListItem> Categories { get; set; }
+        public string CurrentCategory { get; set; }
     }
 }
