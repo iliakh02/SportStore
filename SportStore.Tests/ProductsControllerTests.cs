@@ -1,20 +1,30 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Routing;
 using Moq;
 using SportStore.Data.Abstract;
 using SportStore.Models.Entities;
 using SportStore.WebUI.Controllers;
 using SportStore.WebUI.Interfaces;
 using SportStore.WebUI.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace SportStore.Tests
 {
     public class ProductsControllerTests
     {
-        private List<Category> _categories = new List<Category>
+        private readonly List<Category> _categories = new List<Category>
         {
             new Category {Id = 1, Name = "Category1"},
             new Category {Id = 2, Name = "Category2"},
@@ -24,7 +34,7 @@ namespace SportStore.Tests
             new Category {Id = 6, Name = "Category6"},
             new Category {Id = 7, Name = "Category7"}
         };
-        private List<Product> _expectedProducts = new List<Product>
+        private readonly List<Product> _expectedProducts = new List<Product>
             {
                 new Product { Id = 1, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
                 new Product { Id = 2, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
@@ -50,6 +60,8 @@ namespace SportStore.Tests
             var fakeCategoryRepository = new Mock<ICategoryRepository>();
             var fakeWebHostEnvironment = new Mock<IWebHostEnvironment>();
 
+            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+
             fakeCategoryRepository.Setup(categoryRepository => categoryRepository.GetAll())
                 .Returns(_categories);
             fakeCategoryRepository.Setup(categoryRepository => categoryRepository.GetById(It.IsAny<int>()))
@@ -64,7 +76,7 @@ namespace SportStore.Tests
                 .Returns(_expectedProducts.FirstOrDefault(n => n.Id == productId));
 
             fakeWebHostEnvironment.Setup(webHostEnvironment => webHostEnvironment.WebRootPath)
-                .Returns("Test/test");
+                .Returns(path);
 
             var productsController = new ProductsController(fakeProductRepository.Object, fakeCategoryRepository.Object, fakeWebHostEnvironment.Object, fakeUrlService.Object);
 
@@ -72,14 +84,23 @@ namespace SportStore.Tests
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
-        [InlineData(4)]
-        public void IndexReturnsViewResultWithListOfProductsPerPageTest(int pageNumber)
+        [InlineData(1, "User", "Index")]
+        [InlineData(2, "User", "Index")]
+        [InlineData(3, "User", "Index")]
+        [InlineData(4, "User", "Index")]
+        [InlineData(1, "Administrator", "AdminIndex")]
+        [InlineData(4, "Administrator", "AdminIndex")]
+        public void IndexReturnsViewResultWithListOfProductsPerPageTest(int pageNumber, string name, string expectedView)
         {
             // Arrange
             var productsController = InitializeProductsController();
+            var httpContext = new Mock<HttpContext>();
+            httpContext.Setup(m => m.User.IsInRole(name)).Returns(true);
+            //httpContext.Setup(m => m.User.FindFirst(ClaimTypes.Name)).Returns(name);
+
+            var context = new ControllerContext(new ActionContext(httpContext.Object, new RouteData(), new ControllerActionDescriptor()));
+
+            productsController.ControllerContext = context;
 
             // Act
             var result = productsController.Index("", "", pageNumber);
@@ -87,9 +108,10 @@ namespace SportStore.Tests
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
 
-            Assert.Equal((pageNumber * productsController.PageSize <= _expectedProducts.Count()) ?
+            Assert.Equal(expectedView, viewResult.ViewName);
+            Assert.Equal((pageNumber * productsController.PageSize <= _expectedProducts.Count) ?
                 productsController.PageSize
-                : _expectedProducts.Count() - (pageNumber - 1) * productsController.PageSize
+                : _expectedProducts.Count - (pageNumber - 1) * productsController.PageSize
                 , (viewResult?.Model as ProductsViewModel).Products.Count);
         }
 
@@ -105,7 +127,37 @@ namespace SportStore.Tests
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
 
-            Assert.Equal(_categories.Count, (viewResult?.Model as ProductCreateViewModel).Categories.Count());
+            Assert.Equal(_categories.Count, (viewResult?.Model as ProductCreateViewModel).Categories.Count);
+        }
+
+        [Fact]
+        public void CreateReturnsRedirectToActionResult()
+        {
+            var productsController = InitializeProductsController();
+            using (var stream = new MemoryStream(new byte[] { 1, 2, 3, 4 }))
+            {
+                var file = new Mock<IFormFile>();
+
+                file.Setup(f => f.FileName)
+                    .Returns("test.jpg")
+                    .Verifiable();
+                file.Setup(f => f.CopyToAsync(It.IsAny<Stream>(), CancellationToken.None))
+                    .Callback<Stream, CancellationToken>((stream, token) =>
+                    {
+                        stream.CopyTo(stream);
+                    }).Returns(Task.CompletedTask);
+                var productCreateViewModel = new ProductCreateViewModel
+                {
+                    Name = "test",
+                    CategoryId = 3,
+                    Image = file.Object,
+                };
+
+                var result = productsController.Create(productCreateViewModel);
+
+                var viewResult = Assert.IsType<RedirectToActionResult>(result);
+                Assert.True(viewResult.ActionName.Equals("Index"));
+            }
         }
 
         [Theory]

@@ -27,4 +27,8 @@
     <ProjectReference Include="..\SportStore.WebUI\SportStore.WebUI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="images\" />
+  </ItemGroup>
+
 </Project>

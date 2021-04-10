@@ -114,7 +114,7 @@ namespace SportStore.WebUI.Controllers
 
                 using (var fileStream = new FileStream(_webHostEnvironment.WebRootPath + path, FileMode.Create))
                 {
-                    productCreateViewModel.Image.CopyTo(fileStream);
+                    productCreateViewModel.Image.CopyToAsync(fileStream);
                 }
 
                 var product = new Product
