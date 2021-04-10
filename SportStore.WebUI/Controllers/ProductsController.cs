@@ -6,6 +6,7 @@ using SportStore.Data.Abstract;
 using SportStore.Models.Entities;
 using SportStore.WebUI.Interfaces;
 using SportStore.WebUI.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,11 +32,14 @@ namespace SportStore.WebUI.Controllers
 
         public IActionResult Index(string searchString, string category = "All", int page = 1, ProductsSortState sortOrder = ProductsSortState.IdAsc)
         {
-            ViewData["IdSort"] = sortOrder == ProductsSortState.IdAsc ? ProductsSortState.IdDesc : ProductsSortState.IdAsc;
-            ViewData["NameSort"] = sortOrder == ProductsSortState.NameAsc ? ProductsSortState.NameDesc : ProductsSortState.NameAsc;
-            ViewData["ProducerSort"] = sortOrder == ProductsSortState.ProducerAsc ? ProductsSortState.ProducerDesc : ProductsSortState.ProducerAsc;
-            ViewData["PriceSort"] = sortOrder == ProductsSortState.PriceAsc ? ProductsSortState.PriceDesc : ProductsSortState.PriceAsc;
-
+            if (!User.IsInRole("Administrator"))
+            {
+                ViewData["SortOrders"] = Enum.GetValues(typeof(ProductsSortState)).Cast<ProductsSortState>().Select(v => new SelectListItem
+                {
+                    Text = v.ToString(),
+                    Value = v.ToString()
+                }).ToList();
+            }
             var products = _productRepository.GetAll();
             var categories = _categoryRepository.GetAll();
             List<SelectListItem> selectListCategories = new List<SelectListItem>(

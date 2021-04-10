@@ -8,8 +8,8 @@
             <input type="submit" value="Search" class="btn btn-primary">
         </form>
         <form asp-controller="Products" asp-action="Index" method="post">
-            <select name="sortOrder"></select>
-            <input type="submit" value="Filter" class="btn btn-primary">
+            <select name="sortOrder" asp-items="@ViewBag.SortOrders"></select>
+            <input type="submit" value="Sort" class="btn btn-primary">
         </form>
         <form asp-controller="Products" asp-action="Index" method="post">
             <select name="category" aria-placeholder="Category" asp-items="@Model.Categories"></select>
