@@ -263,3 +263,15 @@ img#product-image {
 .opacity-40 {
     opacity: 0.4;
 }
+
+.old-price {
+    margin-top: -47px;
+    position: absolute;
+}
+
+.margin-left-15 {
+    margin-left: 15px;
+}
+.product-details-img {
+    height: 500px;
+}

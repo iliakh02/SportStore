@@ -7,7 +7,7 @@ namespace SportStore.Data.Repositories
 {
     public class EntityBaseRepository<T> : IEntityBaseRepository<T> where T : class, IEntityBase
     {
-        private readonly SportStoreContext _context;
+        protected readonly SportStoreContext _context;
 
         public EntityBaseRepository(SportStoreContext context)
         {
@@ -34,7 +34,7 @@ namespace SportStore.Data.Repositories
             return _context.Set<T>().ToList();
         }
 
-        public T GetById(int id)
+        public virtual T GetById(int id)
         {
             return _context.Set<T>().FirstOrDefault(x => x.Id == id);
         }

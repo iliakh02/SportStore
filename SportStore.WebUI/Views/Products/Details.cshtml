@@ -1,0 +1,25 @@
+﻿@model SportStore.Models.Entities.Product
+
+    <div class="d-flex flex-column">
+        <h1 class="w-100">@Model.Name</h1>
+        <div class="w-100 d-flex">
+            <div class="w-50 product-details-img d-flex justify-content-center">
+                <img src="@Model.Image" alt="@Model.Name" class="mw-100 mh-100" />
+            </div>
+            <div class="w-50 border">
+                <div class="d-flex align-items-center p-4">
+                    @if(Model.Discount > 0)
+                    {
+                        <p class="old-price"><del>@Model.Price</del></p>
+                        <p class="h4 text-danger">@(Decimal.ToDouble(Model.Price) * (1 - Model.Discount)) UAN</p>
+                    }
+                    else
+                    {
+                        <p class="h4">@Model.Price UAN</p>
+                    }
+                    <a class="btn btn-success margin-left-15"><span class="glyphicon glyphicon-shopping-cart"></span> <b>Add to cart</b></a>
+                </div>
+                <p class="p-4">@Model.Description</p>
+            </div>
+        </div>
+    </div>

@@ -21,7 +21,7 @@
         @foreach (var product in Model.Products)
         {
             <div class="product-item shadow p-2 d-flex flex-column align-items-center border position-relative @((product.Amount == 0)? "opacity-40" : "")">
-                <a href="#" class="product-item-img">
+                <a asp-controller="Products" asp-action="Details" asp-route-category="@product.Category.Name" asp-route-name="@product.Name" asp-route-id="@product.Id" class="product-item-img">
                     <img src="@product.Image" alt="@product.Name" class="mw-100 mh-100">
                 </a>
                 <div>

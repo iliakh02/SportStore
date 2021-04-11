@@ -10,9 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SportStore.WebUI.Controllers
 {
+    [Route("Products")]
     public class ProductsController : Controller
     {
         private readonly IProductRepository _productRepository;
@@ -90,6 +92,13 @@ namespace SportStore.WebUI.Controllers
         }
 
         [HttpGet]
+        [Route("{Category}/{Name}")]
+        public ActionResult Details(string category, string name, int id)
+        {
+            return View(_productRepository.GetById(id));
+        }
+
+        [HttpGet("Create")]
         [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
@@ -146,7 +155,7 @@ namespace SportStore.WebUI.Controllers
             return View(productCreateViewModel);
         }
 
-        [HttpGet]
+        [HttpGet("Edit")]
         [Authorize(Roles = "Administrator")]
         public IActionResult Edit(int id)
         {
