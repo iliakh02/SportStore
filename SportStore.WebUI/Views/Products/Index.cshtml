@@ -28,8 +28,9 @@
                     <a class="w-100 h3">@product.Name</a>
                     <div class="w-100 d-flex justify-content-between position-absolute fixed-bottom p-3">
 
-                        <h4 class="mr-auto"><b>@product.Price грн.</b></h4>
-                        <form action="" method="post">
+                        <h4 class="mr-auto"><b>@product.Price UAN.</b></h4>
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post" >
+                            <input type="hidden" name="id" value="@product.Id"/> 
                             <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-shopping-cart"></span></button>
                         </form>
                     </div>
