@@ -26,10 +26,13 @@ namespace SportStore.WebUI.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            if (Int32.TryParse(_userManager.GetUserId(User), out int userId))
+                return NotFound();
+            var cart = _cartRepository.GetAll().Where(n => n.UserId == userId).ToList();
+            return View(cart);
         }
         [HttpPost]
-        public IActionResult AddToCart(int id)
+        public IActionResult AddToCart(int id, string returnUrl = null)
         {
             var product = _productRepository.GetById(id);
             if (product == null)
@@ -43,7 +46,8 @@ namespace SportStore.WebUI.Controllers
                 UserId = userId
             };
             _cartRepository.Add(cartItem);
-            return Ok();
+            _cartRepository.Commit();
+            return Redirect(returnUrl);
         }
     }
 }

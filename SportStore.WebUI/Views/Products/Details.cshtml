@@ -21,6 +21,7 @@
                     {
                         <form asp-controller="Cart" asp-action="AddToCart" method="post" class="margin-left-15">
                             <input type="hidden" name="id" value="@Model.Id" />
+                            <input type="hidden" value="@string.Format("{0}{1}",Context.Request.Path, Context.Request.QueryString)" name="returnUrl" />
                             <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-shopping-cart"></span> <b>Add to cart</b></button>
                         </form>
                     }

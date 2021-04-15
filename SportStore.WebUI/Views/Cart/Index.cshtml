@@ -1,0 +1,34 @@
+﻿@model List<SportStore.Models.Entities.CartItem>
+
+<div>
+    @foreach (var cartItem in Model)
+    {
+        <div>
+            <div class="d-flex w-100">
+                <img href="@cartItem.Product.Image" class="cart-item-image" />
+                <div>
+                    <p>@cartItem.Product.Name </p>
+                </div>
+                <div>
+                    <form asp-controller="Cart" asp-action="Delete" method="post">
+                        <button type="submit" value=" " class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                    </form>
+                </div>
+            </div>
+            <div>
+                <div class="d-flex">
+                    <form asp-controller="Cart" asp-action="Delete" method="post" class="border">
+                        <button>-</button>
+                    </form>
+                    <div>@cartItem.Amount</div>
+                    <form asp-controller="Cart" asp-action="Delete" method="post" class="border">
+                        <button>+</button>
+                    </form>
+                </div>
+                <div>@cartItem.Product.Price UAN</div>
+            </div>
+        </div>
+    }
+</div>
+
+

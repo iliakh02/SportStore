@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using SportStore.Data.Abstract
+
+@inject ICartRepository cartRepository
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -44,6 +48,16 @@
                             else
                             {
                                 <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-user"></span> Log in</a>
+                            }
+                        </li>
+                        <li class="nav-item position-relative">
+                            <a asp-controller="Cart" asp-action="Index" class="nav-link text-light"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                            @{
+                                int amount = cartRepository.GetAll().Count;
+                                if (amount > 0)
+                                {
+                                    <span class="bg-danger position-absolute cart-size"></span>
+                                }
                             }
                         </li>
                     </ul>

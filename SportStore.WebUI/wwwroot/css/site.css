@@ -275,3 +275,14 @@ img#product-image {
 .product-details-img {
     height: 500px;
 }
+
+
+
+.cart-size {
+    border-radius: 5px;
+}
+
+.cart-item-image {
+    max-width: 40px;
+    max-height: 40px;
+}
