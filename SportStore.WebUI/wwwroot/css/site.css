@@ -283,6 +283,20 @@ img#product-image {
 }
 
 .cart-item-image {
-    max-width: 40px;
-    max-height: 40px;
+    max-width: 80px;
+    max-height: 80px;
+}
+
+/* Paddings */
+.p-l-3 {
+    padding-left: 1rem !important;
+}
+.p-r-3 {
+    padding-right: 1rem !important;
+}
+.p-t-3 {
+    padding-top: 1rem !important;
+}
+.p-b-3 {
+    padding-bottom: 1rem !important;
 }

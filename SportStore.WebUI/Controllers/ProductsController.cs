@@ -113,7 +113,7 @@ namespace SportStore.WebUI.Controllers
             return View(productCreateViewModel);
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         [Authorize(Roles = "Administrator")]
         public IActionResult Create(ProductCreateViewModel productCreateViewModel)
         {
@@ -186,7 +186,7 @@ namespace SportStore.WebUI.Controllers
             return View(productEditViewModel);
         }
 
-        [HttpPost]
+        [HttpPost("Edit")]
         [Authorize(Roles = "Administrator")]
         public IActionResult Edit(ProductEditViewModel productEditViewModel)
         {
@@ -231,7 +231,7 @@ namespace SportStore.WebUI.Controllers
             return View(productEditViewModel);
         }
 
-        [HttpPost]
+        [HttpPost("Delete")]
         [Authorize(Roles = "Administrator")]
         public IActionResult Delete(int id, int pageSize, string queries)
         {

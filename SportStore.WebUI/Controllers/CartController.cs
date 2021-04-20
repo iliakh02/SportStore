@@ -24,13 +24,16 @@ namespace SportStore.WebUI.Controllers
             _cartRepository = cartRepository;
             _userManager = userManager;
         }
+
+        [Route("Cart")]
         public IActionResult Index()
         {
-            if (Int32.TryParse(_userManager.GetUserId(User), out int userId))
+            if (!Int32.TryParse(_userManager.GetUserId(User), out int userId))
                 return NotFound();
             var cart = _cartRepository.GetAll().Where(n => n.UserId == userId).ToList();
             return View(cart);
         }
+
         [HttpPost]
         public IActionResult AddToCart(int id, string returnUrl = null)
         {
@@ -40,14 +43,47 @@ namespace SportStore.WebUI.Controllers
 
             if (!Int32.TryParse(_userManager.GetUserId(User), out int userId))
                 return BadRequest("User is incorrect.");
+
+            var cartItems = _cartRepository.GetAll().Where(n => n.UserId == userId).ToList();
+            var currentCartItem = cartItems?.FirstOrDefault(n => n.ProductId == product.Id);
+
+            if(currentCartItem != null)
+            {
+                var updateCartItem = new CartItem
+                {
+                    Id = currentCartItem.Id,
+                    ProductId = currentCartItem.ProductId,
+                    UserId = currentCartItem.UserId,
+                    Amount = currentCartItem.Amount + 1
+                };
+                _cartRepository.Update(updateCartItem);
+                _cartRepository.Commit();
+                return Redirect(returnUrl);
+            }
+
             var cartItem = new CartItem
             {
                 ProductId = id,
-                UserId = userId
+                UserId = userId,
+                Amount = 1
             };
             _cartRepository.Add(cartItem);
             _cartRepository.Commit();
             return Redirect(returnUrl);
+        }
+
+        [HttpPost]
+        [Route("Cart/Delete")]
+        public IActionResult Delete(int id)
+        {
+            var product = _cartRepository.GetById(id);
+            if (product == null)
+                return NotFound();
+
+            _cartRepository.Delete(product);
+            _cartRepository.Commit();
+
+            return View("Index");
         }
     }
 }

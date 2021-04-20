@@ -11,8 +11,8 @@ namespace SportStore.Data.Repositories
         public CartRepository(SportStoreContext context) : base(context) { }
         public override List<CartItem> GetAll()
         {
-            var carts = _context.Carts.Include(n => n.Product).ToList();
-            return base.GetAll();
+            var carts = _context.Carts.Include(n => n.Product).AsNoTracking().ToList();
+            return carts;
         }
     }
 }

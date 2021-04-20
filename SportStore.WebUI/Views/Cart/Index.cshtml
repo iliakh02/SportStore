@@ -5,27 +5,30 @@
     {
         <div>
             <div class="d-flex w-100">
-                <img href="@cartItem.Product.Image" class="cart-item-image" />
-                <div>
-                    <p>@cartItem.Product.Name </p>
-                </div>
-                <div>
-                    <form asp-controller="Cart" asp-action="Delete" method="post">
-                        <button type="submit" value=" " class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                    </form>
+                <img src="@cartItem.Product.Image" class="cart-item-image" />
+                <div class="w-100 p-l-3 p-r-3 d-flex justify-content-between">
+                    <div>
+                        <p class="h2 m-0 w-100">@cartItem.Product.Name </p>
+                    </div>
+                    <div class="float-right le">
+                        <form asp-controller="Cart" asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@cartItem.Id" />
+                            <button value=" " class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div>
-                <div class="d-flex">
-                    <form asp-controller="Cart" asp-action="Delete" method="post" class="border">
-                        <button>-</button>
+            <div class="w-50 d-flex p-t-3 float-right align-items-baseline">
+                <div class="d-flex align-items-baseline h4">
+                    <form asp-controller="Cart" asp-action="" method="post">
+                        <button class="border-0"><span class="glyphicon glyphicon-minus"></span></button>
                     </form>
-                    <div>@cartItem.Amount</div>
-                    <form asp-controller="Cart" asp-action="Delete" method="post" class="border">
-                        <button>+</button>
+                    <div class="p-l-3 p-r-3 h4 m-0">@cartItem.Amount</div>
+                    <form asp-controller="Cart" asp-action="" method="post">
+                        <button class="border-0"><span class="glyphicon glyphicon-plus"></span></button>
                     </form>
                 </div>
-                <div>@cartItem.Product.Price UAN</div>
+                <div class="h3 w-100 text-right">@cartItem.Product.Price UAN</div>
             </div>
         </div>
     }
