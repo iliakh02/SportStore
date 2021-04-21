@@ -10,7 +10,7 @@
                     <div>
                         <p class="h2 m-0 w-100">@cartItem.Product.Name </p>
                     </div>
-                    <div class="float-right le">
+                    <div class="float-right">
                         <form asp-controller="Cart" asp-action="Delete" method="post">
                             <input type="hidden" name="id" value="@cartItem.Id" />
                             <button value=" " class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
@@ -20,15 +20,17 @@
             </div>
             <div class="w-50 d-flex p-t-3 float-right align-items-baseline">
                 <div class="d-flex align-items-baseline h4">
-                    <form asp-controller="Cart" asp-action="" method="post">
+                    <form asp-controller="Cart" asp-action="Decrease" method="post" class="increase-cart-item-form">
+                        <input type="hidden" name="id" value="@cartItem.Id" class="item-id" />
                         <button class="border-0"><span class="glyphicon glyphicon-minus"></span></button>
                     </form>
-                    <div class="p-l-3 p-r-3 h4 m-0">@cartItem.Amount</div>
-                    <form asp-controller="Cart" asp-action="" method="post">
-                        <button class="border-0"><span class="glyphicon glyphicon-plus"></span></button>
+                    <div class="p-l-3 p-r-3 h4 m-0" id="cart-item-amount-@cartItem.Id">@cartItem.Amount</div>
+                    <form asp-controller="Cart" asp-action="Increase" method="post" class="increase-cart-item-form">
+                        <input type="hidden" name="id" value="@cartItem.Id" class="item-id" />
+                        <button class="border-0 increase-btn"><span class="glyphicon glyphicon-plus"></span></button>
                     </form>
                 </div>
-                <div class="h3 w-100 text-right">@cartItem.Product.Price UAN</div>
+                <div class="h3 w-100 text-right p-r-3">@cartItem.Product.Price UAN</div>
             </div>
         </div>
     }

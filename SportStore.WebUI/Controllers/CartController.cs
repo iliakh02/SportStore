@@ -73,7 +73,6 @@ namespace SportStore.WebUI.Controllers
         }
 
         [HttpPost]
-        [Route("Cart/Delete")]
         public IActionResult Delete(int id)
         {
             var product = _cartRepository.GetById(id);
@@ -84,6 +83,39 @@ namespace SportStore.WebUI.Controllers
             _cartRepository.Commit();
 
             return View("Index");
+        }
+
+        [HttpPost]
+        public JsonResult Increase(int id)
+        {
+            var item = UpdateAmount(id, true);
+
+            return Json(item);
+        }
+
+        [HttpPost]
+        public IActionResult Decrease(int id)
+        {
+            var item = UpdateAmount(id, false);
+
+            return Json(item);
+        }
+
+        private CartItem UpdateAmount(int id, bool increase)
+        {
+            CartItem item = _cartRepository.GetById(id);
+            if (item == null)
+                return null;
+
+            if (increase)
+                item.Amount++;
+            else
+                item.Amount--;
+
+            _cartRepository.Update(item);
+            _cartRepository.Commit();
+
+            return item;
         }
     }
 }
