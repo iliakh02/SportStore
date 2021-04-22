@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using SportStore.Data.Abstract;
 using SportStore.Data.Repositories;
 using SportStore.Models.Entities;
@@ -90,7 +91,13 @@ namespace SportStore.WebUI.Controllers
         {
             var item = UpdateAmount(id, true);
 
-            return Json(item);
+            return Json(new
+            {
+                id = item.Id,
+                amount = item.Amount,
+                price = item.Product.Price * item.Amount,
+                diffInTotalPrice = item.Product.Price
+            });
         }
 
         [HttpPost]
@@ -98,12 +105,17 @@ namespace SportStore.WebUI.Controllers
         {
             var item = UpdateAmount(id, false);
 
-            return Json(item);
+            return Json(new {
+                id = item.Id,
+                amount = item.Amount,
+                price = item.Product.Price * item.Amount,
+                diffInTotalPrice = -item.Product.Price
+            });
         }
 
         private CartItem UpdateAmount(int id, bool increase)
         {
-            CartItem item = _cartRepository.GetById(id);
+            CartItem item = _cartRepository.GetAll().FirstOrDefault(n => n.Id == id);
             if (item == null)
                 return null;
 

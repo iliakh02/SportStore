@@ -158,6 +158,9 @@ img#product-image {
     .products-list .product-item {
         max-width: 213px;
     }
+    .bottom-part-of-cart-container {
+        justify-content: center;
+    }
 }
 
 @media (min-width: 992px) {
@@ -212,4 +215,9 @@ img#product-image {
 }
 .p-b-3 {
     padding-bottom: 1rem !important;
+}
+.total-price-container {
+    background-color: #ddf2dd;
+    border: 1px solid #00aa00;
+    border-radius: 4px;
 }

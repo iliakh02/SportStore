@@ -21,7 +21,7 @@ function readURL(input) {
 }
 
 
-// Request to increase the amount of product into a cart.
+// Request to change the amount of product into a cart.
 $(".increase-cart-item-form").on("submit", function (e) {
     e.preventDefault();
 
@@ -35,6 +35,11 @@ $(".increase-cart-item-form").on("submit", function (e) {
         data: { id: itemId },
         success: function (responce) {
             $("#cart-item-amount-" + responce["id"]).html(responce["amount"]);
+            $("#product-total-price-" + responce["id"]).html(responce["price"].toFixed(2).replace('.', ',') + " UAN");
+            let oldTotalPrice = $("#total-price-value").text().replace(',', '.');
+            let different = responce["diffInTotalPrice"];
+            let newTotalPrice = +oldTotalPrice + different;
+            $("#total-price-value").html(newTotalPrice.toFixed(2).replace('.', ','));
         },
         failure: function (response) {
             alert(response);
