@@ -194,8 +194,18 @@ img#product-image {
 
 
 
-.cart-size {
-    border-radius: 5px;
+#cart-size {
+    border-radius: 14px;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    position: absolute;
+    top: 5px;
+    left: 70%;
+    padding: 0px 3px;
 }
 
 .cart-item-image {

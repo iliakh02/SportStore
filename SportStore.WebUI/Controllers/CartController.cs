@@ -83,7 +83,7 @@ namespace SportStore.WebUI.Controllers
             _cartRepository.Delete(product);
             _cartRepository.Commit();
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

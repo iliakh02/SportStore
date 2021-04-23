@@ -1,6 +1,8 @@
 ﻿@using SportStore.Data.Abstract
+@using Microsoft.AspNetCore.Identity
 
 @inject ICartRepository cartRepository
+@inject UserManager<SportStore.Models.Entities.User> userManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +19,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SportStore.WebUI</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SportStore</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -37,7 +39,7 @@
                                 <a class="nav-link text-light" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
                             </li>
                         }
-                    </ul>                   
+                    </ul>
                     <ul class="navbar-nav float-md-right">
                         <li class="nav-item">
                             @if (User.Identity.IsAuthenticated)
@@ -52,12 +54,17 @@
                             }
                         </li>
                         <li class="nav-item position-relative">
-                            <a asp-controller="Cart" asp-action="Index" class="nav-link text-light"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                            <a asp-controller="Cart" asp-action="Index" class="nav-link text-light h3 m-0"><span class="glyphicon glyphicon-shopping-cart"></span></a>
                             @{
-                                int amount = cartRepository.GetAll().Count;
+                                int amount = 0;
+                                if (Int32.TryParse(userManager.GetUserId(User), out int userId))
+                                {
+                                    amount = cartRepository.GetAll().Where(n => n.UserId == userId).Sum(n => n.Amount);
+
+                                }
                                 if (amount > 0)
                                 {
-                                    <span class="bg-danger position-absolute cart-size"></span>
+                                    <span class="bg-danger text-white" id="cart-size">@amount</span>
                                 }
                             }
                         </li>

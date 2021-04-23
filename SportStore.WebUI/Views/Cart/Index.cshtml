@@ -4,39 +4,46 @@
     <div class="p-3 m-0 h2">
         Cart
     </div>
-    @foreach (var cartItem in Model)
+    @if (Model.Count == 0)
     {
-        <div class="p-l-3 p-t-3">
-            <div class="d-flex w-100">
-                <img src="@cartItem.Product.Image" class="cart-item-image" />
-                <div class="w-100 p-l-3 p-r-3">
-                    <div class="d-flex justify-content-between">
-                        <p class="h3 m-0 w-100">@cartItem.Product.Name </p>
-                        <div class="float-right">
-                            <form asp-controller="Cart" asp-action="Delete" method="post">
-                                <input type="hidden" name="id" value="@cartItem.Id" />
-                                <button value=" " class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                            </form>
+        <p class="h4 text-center w-100 text-secondary">The cart is empty :(</p>
+    }
+    else
+    {
+        @foreach (var cartItem in Model)
+        {
+            <div class="p-l-3 p-t-3">
+                <div class="d-flex w-100">
+                    <img src="@cartItem.Product.Image" class="cart-item-image" />
+                    <div class="w-100 p-l-3 p-r-3">
+                        <div class="d-flex justify-content-between">
+                            <p class="h3 m-0 w-100">@cartItem.Product.Name </p>
+                            <div class="float-right">
+                                <form asp-controller="Cart" asp-action="Delete" method="post">
+                                    <input type="hidden" name="id" value="@cartItem.Id" />
+                                    <button value=" " class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                    <div class="w-75 d-flex p-t-3 float-right align-items-baseline">
-                        <div class="d-flex align-items-baseline h4">
-                            <form asp-controller="Cart" asp-action="Decrease" method="post" class="cart-item-form">
-                                <input type="hidden" name="id" value="@cartItem.Id" class="item-id" />
-                                <button class="border-0 focus-outline-none bg-white"><span class="glyphicon glyphicon-minus"></span></button>
-                            </form>
-                            <div class="p-l-3 p-r-3 h4 m-0" id="cart-item-amount-@cartItem.Id">@cartItem.Amount</div>
-                            <form asp-controller="Cart" asp-action="Increase" method="post" class="cart-item-form">
-                                <input type="hidden" name="id" value="@cartItem.Id" class="item-id" />
-                                <button class="border-0 focus-outline-none bg-white"><span class="glyphicon glyphicon-plus"></span></button>
-                            </form>
+                        <div class="w-75 d-flex p-t-3 float-right align-items-baseline">
+                            <div class="d-flex align-items-baseline h4">
+                                <form asp-controller="Cart" asp-action="Decrease" method="post" class="cart-item-form">
+                                    <input type="hidden" name="id" value="@cartItem.Id" class="item-id" />
+                                    <button class="border-0 focus-outline-none bg-white"><span class="glyphicon glyphicon-minus"></span></button>
+                                </form>
+                                <div class="p-l-3 p-r-3 h4 m-0" id="cart-item-amount-@cartItem.Id">@cartItem.Amount</div>
+                                <form asp-controller="Cart" asp-action="Increase" method="post" class="cart-item-form">
+                                    <input type="hidden" name="id" value="@cartItem.Id" class="item-id" />
+                                    <button class="border-0 focus-outline-none bg-white"><span class="glyphicon glyphicon-plus"></span></button>
+                                </form>
+                            </div>
+                            <div class="h3 w-100 text-right" id="product-total-price-@cartItem.Id">@(cartItem.Product.Price * cartItem.Amount) UAN</div>
                         </div>
-                        <div class="h3 w-100 text-right" id="product-total-price-@cartItem.Id">@(cartItem.Product.Price * cartItem.Amount) UAN</div>
                     </div>
                 </div>
             </div>
-        </div>
-        <br />
+            <br />
+        }
     }
 
     <div class="bottom-part-of-cart-container w-100 p-t-3 p-l-3 d-flex justify-content-between align-items-center">

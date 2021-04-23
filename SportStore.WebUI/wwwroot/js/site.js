@@ -49,6 +49,14 @@ $(".cart-item-form").on("submit", function (e) {
                 let different = responce["diffInTotalPrice"];
                 let newTotalPrice = +oldTotalPrice + different;
                 $("#total-price-value").html(newTotalPrice.toFixed(2).replace('.', ','));
+
+                let cartSize = $("#cart-size").text();
+                if (formAction.includes("Decrease")) {
+                    cartSize = +cartSize - 1;
+                } else {
+                    cartSize = +cartSize + 1;
+                }
+                $("#cart-size").html(cartSize);
             },
             failure: function (response) {
                 alert(response);
