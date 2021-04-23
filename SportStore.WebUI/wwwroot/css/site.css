@@ -221,3 +221,7 @@ img#product-image {
     border: 1px solid #00aa00;
     border-radius: 4px;
 }
+
+.focus-outline-none:focus {
+    outline: none !important;
+}
