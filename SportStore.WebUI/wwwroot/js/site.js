@@ -22,32 +22,42 @@ function readURL(input) {
 
 
 // Request to change the amount of product into a cart.
-$(".increase-cart-item-form").on("submit", function (e) {
+$(".cart-item-form").on("submit", function (e) {
     e.preventDefault();
 
     let formAction = $(this).attr("action");
     
     let itemId = $(this).children(".item-id").attr("value");
 
-    $.ajax({
-        type: "POST",
-        url: formAction,
-        data: { id: itemId },
-        success: function (responce) {
-            $("#cart-item-amount-" + responce["id"]).html(responce["amount"]);
-            $("#product-total-price-" + responce["id"]).html(responce["price"].toFixed(2).replace('.', ',') + " UAN");
-            let oldTotalPrice = $("#total-price-value").text().replace(',', '.');
-            let different = responce["diffInTotalPrice"];
-            let newTotalPrice = +oldTotalPrice + different;
-            $("#total-price-value").html(newTotalPrice.toFixed(2).replace('.', ','));
-        },
-        failure: function (response) {
-            alert(response);
-        },
-        error: function (response) {
-            alert(response);
-        }
-    });
+    let isValid = true;
+    if (formAction.includes("Decrease")) {
+        let amount = $(this).parent().find("#cart-item-amount-" + itemId).text();
+
+        isValid = (+amount > 1);
+    }
+    if (isValid) {
+        $.ajax({
+            type: "POST",
+            url: formAction,
+            data: { id: itemId },
+            success: function (responce) {
+                $("#cart-item-amount-" + responce["id"]).html(responce["amount"]);
+
+                $("#product-total-price-" + responce["id"]).html(responce["price"].toFixed(2).replace('.', ',') + " UAN");
+
+                let oldTotalPrice = $("#total-price-value").text().replace(',', '.');
+                let different = responce["diffInTotalPrice"];
+                let newTotalPrice = +oldTotalPrice + different;
+                $("#total-price-value").html(newTotalPrice.toFixed(2).replace('.', ','));
+            },
+            failure: function (response) {
+                alert(response);
+            },
+            error: function (response) {
+                alert(response);
+            }
+        });
+    }
 });
 
 

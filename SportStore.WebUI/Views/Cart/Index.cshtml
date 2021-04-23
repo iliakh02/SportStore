@@ -20,12 +20,12 @@
             </div>
             <div class="w-50 d-flex p-t-3 float-right align-items-baseline">
                 <div class="d-flex align-items-baseline h4">
-                    <form asp-controller="Cart" asp-action="Decrease" method="post" class="increase-cart-item-form">
+                    <form asp-controller="Cart" asp-action="Decrease" method="post" class="cart-item-form">
                         <input type="hidden" name="id" value="@cartItem.Id" class="item-id" />
                         <button class="border-0"><span class="glyphicon glyphicon-minus"></span></button>
                     </form>
                     <div class="p-l-3 p-r-3 h4 m-0" id="cart-item-amount-@cartItem.Id">@cartItem.Amount</div>
-                    <form asp-controller="Cart" asp-action="Increase" method="post" class="increase-cart-item-form">
+                    <form asp-controller="Cart" asp-action="Increase" method="post" class="cart-item-form">
                         <input type="hidden" name="id" value="@cartItem.Id" class="item-id" />
                         <button class="border-0 increase-btn"><span class="glyphicon glyphicon-plus"></span></button>
                     </form>
