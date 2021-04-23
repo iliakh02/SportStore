@@ -1,23 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using SportStore.Data.Abstract;
-using SportStore.Data.Repositories;
 using SportStore.Models.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SportStore.WebUI.Controllers
 {
     [Authorize(Roles = "User")]
     public class CartController : Controller
     {
-        IProductRepository _productRepository;
-        ICartRepository _cartRepository;
-        UserManager<User> _userManager;
+        private readonly IProductRepository _productRepository;
+        private readonly ICartRepository _cartRepository;
+        private readonly UserManager<User> _userManager;
 
         public CartController(IProductRepository productRepository, ICartRepository cartRepository, UserManager<User> userManager)
         {
@@ -91,6 +87,9 @@ namespace SportStore.WebUI.Controllers
         {
             var item = UpdateAmount(id, true);
 
+            if (item == null)
+                return null;
+
             return Json(new
             {
                 id = item.Id,
@@ -101,10 +100,13 @@ namespace SportStore.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Decrease(int id)
+        public JsonResult Decrease(int id)
         {
             var item = UpdateAmount(id, false);
 
+            if (item == null)
+                return null;
+            
             return Json(new {
                 id = item.Id,
                 amount = item.Amount,

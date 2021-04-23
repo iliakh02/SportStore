@@ -13,9 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -35,23 +32,23 @@ namespace SportStore.Tests
             new Category {Id = 7, Name = "Category7"}
         };
         private readonly List<Product> _expectedProducts = new List<Product>
-            {
-                new Product { Id = 1, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 2, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 3, Name = "Test", Amount = 200, CategoryId = 2, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 4, Name = "Test", Amount = 200, CategoryId = 3, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 5, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 6, Name = "Test", Amount = 200, CategoryId = 2, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 7, Name = "Test", Amount = 200, CategoryId = 4, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 8, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 9, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 10, Name = "Test", Amount = 200, CategoryId = 4, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 11, Name = "Test", Amount = 200, CategoryId = 6, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 12, Name = "Test", Amount = 200, CategoryId = 7, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 13, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 14, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
-                new Product { Id = 15, Name = "Test", Amount = 200, CategoryId = 5, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"}
-            };
+        {
+            new Product { Id = 1, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 2, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 3, Name = "Test", Amount = 200, CategoryId = 2, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 4, Name = "Test", Amount = 200, CategoryId = 3, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 5, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 6, Name = "Test", Amount = 200, CategoryId = 2, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 7, Name = "Test", Amount = 200, CategoryId = 4, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 8, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 9, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 10, Name = "Test", Amount = 200, CategoryId = 4, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 11, Name = "Test", Amount = 200, CategoryId = 6, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 12, Name = "Test", Amount = 200, CategoryId = 7, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 13, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 14, Name = "Test", Amount = 200, CategoryId = 1, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"},
+            new Product { Id = 15, Name = "Test", Amount = 200, CategoryId = 5, Discount = 0.5, Description = "Test", Image = "/image/test.jpg", Price = 300, Producer = "Test"}
+        };
 
         private ProductsController InitializeProductsController(int productId = 1, int categoryId = 1)
         {
