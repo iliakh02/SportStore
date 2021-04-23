@@ -84,6 +84,7 @@ namespace SportStore.Tests
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.Equal(_carts.Where(n => n.UserId == userId).Count(), (viewResult.Model as List<CartItem>).Count());
         }
+
         [Fact]
         public void IndexReturnsNotFound()
         {
@@ -159,7 +160,6 @@ namespace SportStore.Tests
             Assert.Equal("Index", viewResult.ActionName);
         }
 
-
         [Theory]
         [InlineData(4)]
         public void IncreaseReturnsJsonResult(int cartItemId)
@@ -171,6 +171,7 @@ namespace SportStore.Tests
 
             Assert.IsType<JsonResult>(result);
         }
+
         [Theory]
         [InlineData(100)]
         public void IncreaseReturnsNull(int cartItemId)
@@ -182,6 +183,7 @@ namespace SportStore.Tests
 
             Assert.Null(result);
         }
+
         [Theory]
         [InlineData(4)]
         public void DecreaseReturnsJsonResult(int cartItemId)
@@ -193,6 +195,7 @@ namespace SportStore.Tests
 
             Assert.IsType<JsonResult>(result);
         }
+
         [Theory]
         [InlineData(100)]
         public void DecreaseReturnsNull(int cartItemId)
