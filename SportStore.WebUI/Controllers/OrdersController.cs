@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SportStore.Data.Abstract;
 using SportStore.Models.Entities;
 using SportStore.WebUI.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SportStore.WebUI.Controllers
 {
@@ -16,12 +13,14 @@ namespace SportStore.WebUI.Controllers
         UserManager<User> _userManager;
         IOrderRepository _orderRepository;
         ICartRepository _cartRepository;
+        IProductOrderRepository _productOrderRepository;
 
-        public OrdersController(UserManager<User> userManager, IOrderRepository orderRepository, ICartRepository cartRepository)
+        public OrdersController(UserManager<User> userManager, IOrderRepository orderRepository, ICartRepository cartRepository, IProductOrderRepository productOrderRepository)
         {
             _userManager = userManager;
             _orderRepository = orderRepository;
             _cartRepository = cartRepository;
+            _productOrderRepository = productOrderRepository;
         }
 
         public IActionResult Index()
@@ -42,9 +41,45 @@ namespace SportStore.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Order order)
+        public IActionResult Create(OrderCreateViewModel orderModel)
         {
-            return View();
+            var currUser = _userManager.GetUserAsync(User).Result;
+            if (currUser.FirstName != orderModel.User.FirstName
+                || currUser.LastName != orderModel.User.LastName 
+                || currUser.Email != orderModel.User.Email
+                || currUser.PhoneNumber != orderModel.User.PhoneNumber)
+            {
+                currUser.FirstName = orderModel.User.FirstName;
+                currUser.LastName = orderModel.User.LastName;
+                currUser.Email = orderModel.User.Email;
+                currUser.PhoneNumber = orderModel.User.PhoneNumber;
+
+                _userManager.UpdateAsync(currUser);
+            }
+            DateTime orderDate = DateTime.Now;
+            var order = new Order
+            {
+                OrderDate = orderDate,
+                Paid = false,
+                UserId = orderModel.User.Id,
+            };
+            _orderRepository.Add(order);
+            _orderRepository.Commit();
+
+            int orderId = _orderRepository.GetAll().First(n => n.UserId == orderModel.User.Id && n.OrderDate == orderDate).Id;
+
+            foreach (var product in orderModel.Cart)
+            {
+                var productOrder = new ProductOrder
+                {
+                    OrderId = orderId,
+                    ProductId = product.ProductId,
+                    Amount = product.Amount,
+                };
+                _productOrderRepository.Add(productOrder);
+            }
+            _productOrderRepository.Commit();
+            return RedirectToAction("Index");
         }
     }
 }

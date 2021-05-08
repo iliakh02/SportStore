@@ -69,3 +69,17 @@ $(".cart-item-form").on("submit", function (e) {
 });
 
 
+window.onscroll = function () { myFunction() };
+
+// Get the header
+var header = $("#total-order-info");
+
+// Add the sticky class to the header when you reach it's scroll position. Remove "sticky" when you leave the scroll position.
+function myFunction() {
+    if (window.pageYOffset > 62) {
+        header.addClass("sticky");
+        var container = $(".container")[0];
+    } else {
+        header.removeClass("sticky");
+    }
+}
