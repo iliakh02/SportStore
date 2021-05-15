@@ -12,7 +12,7 @@ namespace SportStore.Data.Repositories
 
         public override List<Order> GetAll()
         {
-            return _context.Orders.Include(n => n.ProductOrders).ThenInclude(n => n.Product).ToList();
+            return _context.Orders.Include(n => n.User).Include(n => n.ProductOrders).ThenInclude(p => p.Product).ToList();
         }
     }
 }

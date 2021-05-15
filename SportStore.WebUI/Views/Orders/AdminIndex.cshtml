@@ -1,0 +1,34 @@
+﻿@model List<SportStore.Models.Entities.Order>
+
+<div class="w-100 p-3 bg-white shadow">
+    <h2>My orders:</h2>
+    <table class="w-100 table my-orders-table-striped border my-orders-table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>User:</th>
+                <th>Phone number:</th>
+                <th>Order number:</th>
+                <th>Size (Items):</th>
+                <th>Price:</th>
+                <th>Payment status:</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <th>@($"{order.User.FirstName} {order.User.LastName}")</th>
+                    <th>@order.User.PhoneNumber</th>
+                    <td>@order.Id</td>
+                    <td>@order.ProductOrders.Count</td>
+                    <td>@order.ProductOrders.Sum(n => n.Product.Price * n.Amount) $</td>
+                    <td>
+                        <form>
+                            <input type="checkbox" checked="@order.Paid" value="@((order.Paid)? "Paid" : "Not paid")" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

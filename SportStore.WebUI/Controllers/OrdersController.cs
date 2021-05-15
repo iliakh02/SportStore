@@ -4,6 +4,7 @@ using SportStore.Data.Abstract;
 using SportStore.Models.Entities;
 using SportStore.WebUI.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,8 +28,17 @@ namespace SportStore.WebUI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var orders = _orderRepository.GetAll().Where(n => n.UserId == _userManager.GetUserAsync(User).Result.Id).ToList();
-            return View(orders);
+            List<Order> orders;
+            if (User.IsInRole("Administrator"))
+            {
+                orders = _orderRepository.GetAll().ToList();
+            }
+            else
+            {
+                orders = _orderRepository.GetAll().Where(n => n.UserId == _userManager.GetUserAsync(User).Result.Id).ToList();
+            }
+
+            return View(User.IsInRole("Administrator")? "AdminIndex": "Index", orders);
         }
 
         [HttpGet]
