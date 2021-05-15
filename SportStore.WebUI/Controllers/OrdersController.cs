@@ -23,9 +23,11 @@ namespace SportStore.WebUI.Controllers
             _productOrderRepository = productOrderRepository;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var orders = _orderRepository.GetAll().Where(n => n.UserId == _userManager.GetUserAsync(User).Result.Id).ToList();
+            return View(orders);
         }
 
         [HttpGet]
@@ -49,12 +51,7 @@ namespace SportStore.WebUI.Controllers
                 || currUser.Email != orderModel.User.Email
                 || currUser.PhoneNumber != orderModel.User.PhoneNumber)
             {
-                currUser.FirstName = orderModel.User.FirstName;
-                currUser.LastName = orderModel.User.LastName;
-                currUser.Email = orderModel.User.Email;
-                currUser.PhoneNumber = orderModel.User.PhoneNumber;
-
-                _userManager.UpdateAsync(currUser);
+                _userManager.UpdateAsync(orderModel.User);
             }
             DateTime orderDate = DateTime.Now;
             var order = new Order

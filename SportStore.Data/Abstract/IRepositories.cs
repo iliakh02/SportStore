@@ -7,5 +7,4 @@ namespace SportStore.Data.Abstract
     public interface IOrderRepository : IEntityBaseRepository<Order> { }
     public interface IProductOrderRepository : IEntityBaseRepository<ProductOrder> { }
     public interface IProductRepository : IEntityBaseRepository<Product> { }
-    public interface IPaymentRepository : IEntityBaseRepository<Payment> { }
 }

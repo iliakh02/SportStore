@@ -14,7 +14,6 @@ namespace SportStore.Models.Entities
         public DateTime OrderDate { get; set; }
         [Required]
         public int PaymentId { get; set; }
-        public Payment Payment { get; set; }
         public bool Paid { get; set; }
         public ICollection<ProductOrder> ProductOrders { get; set; }
     }

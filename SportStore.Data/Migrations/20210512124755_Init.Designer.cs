@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportStore.Data;
 
 namespace SportStore.Data.Migrations
 {
     [DbContext(typeof(SportStoreContext))]
-    partial class SportStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20210512124755_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,20 +47,20 @@ namespace SportStore.Data.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", t => t.ExcludeFromMigrations());
+                    b.ToTable("AspNetRoles");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "5764143e-766c-4fb7-95a6-fc05d3cc4956",
+                            ConcurrencyStamp = "25d9ab0a-14d1-408d-b2e6-e40e74d0e51e",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "fda2bec6-2acd-4b8d-8ccd-080a2bd5acd8",
+                            ConcurrencyStamp = "ca8f8814-7b77-4fb8-a67e-160a431874a2",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -232,9 +234,6 @@ namespace SportStore.Data.Migrations
                     b.Property<bool>("Paid")
                         .HasColumnType("bit");
 
-                    b.Property<int>("PaymentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -390,13 +389,13 @@ namespace SportStore.Data.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7176b2d3-aa09-4915-9e8e-5522ae2e5f85",
+                            ConcurrencyStamp = "e302202d-b696-4c86-9d7f-247bda13262f",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGVSIQ7z5iIQ+bD4WL3hd/ak3X/sE9FNpq84mFUxhjIzpcukgXz+6pv9IZsdjemaHg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFpeLe49OQEIBgTiQug10LiZPYTrVb6qFEflIgLJu3PlM1JuCc4K3eRQj3z0j3cAiQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c0923792-b8b8-433f-a0ed-bbc2634c0dea",
+                            SecurityStamp = "6d7147cb-0f7a-4dbe-a22a-df32cc95c695",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });

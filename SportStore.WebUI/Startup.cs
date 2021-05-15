@@ -41,7 +41,6 @@ namespace SportStore.WebUI
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IProductOrderRepository, ProductOrderRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<IPaymentRepository, PaymentRepository>();
 
             services.AddTransient<IUrlService, UrlService>();
 

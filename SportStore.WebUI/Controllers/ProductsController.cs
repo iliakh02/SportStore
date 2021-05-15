@@ -115,7 +115,7 @@ namespace SportStore.WebUI.Controllers
 
         [HttpPost("Create")]
         [Authorize(Roles = "Administrator")]
-        public IActionResult Create(ProductCreateViewModel productCreateViewModel)
+        public async Task<IActionResult> Create(ProductCreateViewModel productCreateViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +123,7 @@ namespace SportStore.WebUI.Controllers
 
                 using (var fileStream = new FileStream(_webHostEnvironment.WebRootPath + path, FileMode.Create))
                 {
-                    productCreateViewModel.Image.CopyToAsync(fileStream);
+                    await productCreateViewModel.Image.CopyToAsync(fileStream);
                 }
 
                 var product = new Product
@@ -197,8 +197,10 @@ namespace SportStore.WebUI.Controllers
                 {
                     path = $"/images/{productEditViewModel.Image.FileName}";
 
-                    using var fileStream = new FileStream(_webHostEnvironment.WebRootPath + path, FileMode.Create);
-                    productEditViewModel.Image.CopyTo(fileStream);
+                    using (var fileStream = new FileStream(_webHostEnvironment.WebRootPath + path, FileMode.Create))
+                    {
+                        productEditViewModel.Image.CopyTo(fileStream);
+                    }
                 }
                 var product = new Product
                 {
@@ -235,7 +237,7 @@ namespace SportStore.WebUI.Controllers
         [Authorize(Roles = "Administrator")]
         public IActionResult Delete(int id, int pageSize, string queries)
         {
-            string redirectUrl = _urlService.ReditectUrlForDelete(pageSize, queries, "Categories");
+            string redirectUrl = _urlService.ReditectUrlForDelete(pageSize, queries, "Products");
 
             var product = _productRepository.GetById(id);
 
