@@ -1,6 +1,6 @@
 ﻿@model OrderCreateViewModel 
 
-<form class="d-md-flex position-relative">
+<form class="d-md-flex position-relative" asp-controller="Orders" asp-action="Create" method="post">
     <div class="total-order-data">
         <h2>Create order</h2>
         <p>Your contact data:</p>
@@ -61,11 +61,6 @@
                         </div>
                     </div>
                 }
-
-            </div>
-
-            <div class="delivery">
-
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@ using SportStore.Models.Entities;
 using SportStore.WebUI.Models;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SportStore.WebUI.Controllers
 {
@@ -43,29 +44,30 @@ namespace SportStore.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(OrderCreateViewModel orderModel)
+        public async Task<IActionResult> CreateAsync(OrderCreateViewModel orderModel)
         {
-            var currUser = _userManager.GetUserAsync(User).Result;
+            var currUser = await _userManager.GetUserAsync(User);
             if (currUser.FirstName != orderModel.User.FirstName
                 || currUser.LastName != orderModel.User.LastName 
                 || currUser.Email != orderModel.User.Email
                 || currUser.PhoneNumber != orderModel.User.PhoneNumber)
             {
-                _userManager.UpdateAsync(orderModel.User);
+                await _userManager.UpdateAsync(orderModel.User);
             }
             DateTime orderDate = DateTime.Now;
             var order = new Order
             {
                 OrderDate = orderDate,
                 Paid = false,
-                UserId = orderModel.User.Id,
+                UserId = currUser.Id,
             };
             _orderRepository.Add(order);
             _orderRepository.Commit();
 
-            int orderId = _orderRepository.GetAll().First(n => n.UserId == orderModel.User.Id && n.OrderDate == orderDate).Id;
+            int orderId = _orderRepository.GetAll().First(n => n.UserId == currUser.Id && DateTime.Compare(n.OrderDate, orderDate) == 0).Id;
 
-            foreach (var product in orderModel.Cart)
+            var cart = _cartRepository.GetAll().Where(n => n.UserId == currUser.Id);
+            foreach (var product in cart)
             {
                 var productOrder = new ProductOrder
                 {
