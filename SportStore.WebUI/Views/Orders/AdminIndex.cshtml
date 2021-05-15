@@ -22,10 +22,10 @@
                     <td>@order.Id</td>
                     <td>@order.ProductOrders.Count</td>
                     <td>@order.ProductOrders.Sum(n => n.Product.Price * n.Amount) $</td>
-                    <td>
-                        <form>
-                            <input type="checkbox" checked="@order.Paid" value="@((order.Paid)? "Paid" : "Not paid")" />
-                        </form>
+                    <td class="d-flex">
+                        <input type="checkbox" checked="@order.Paid" class="is-payment-order" />
+                        <input type="hidden" value="@order.Id" class="order-number" />
+                        <p class="m-o p-0 p-l-3" id="payment-status-@(order.Id)">@((order.Paid)? "Paid" : "Not paid")</p>
                     </td>
                 </tr>
             }

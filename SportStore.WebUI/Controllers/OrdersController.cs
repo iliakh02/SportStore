@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SportStore.Data.Abstract;
 using SportStore.Models.Entities;
@@ -89,6 +90,17 @@ namespace SportStore.WebUI.Controllers
             }
             _productOrderRepository.Commit();
             return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        public JsonResult UpdatePaymentStatus(int id)
+        {
+            var currOrder = _orderRepository.GetById(id);
+            currOrder.Paid = !currOrder.Paid;
+            _orderRepository.Update(currOrder);
+            _orderRepository.Commit();
+            return new JsonResult(new { isPaid = currOrder.Paid});
         }
     }
 }

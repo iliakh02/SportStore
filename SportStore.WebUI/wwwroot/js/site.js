@@ -1,8 +1,8 @@
-﻿"use strict";
+﻿'use strict';
 
-$("#menu-toggle").click(function (e) {
+$('#menu-toggle').click(function (e) {
     e.preventDefault();
-    $("#wrapper").toggleClass("toggled");
+    $('#wrapper').toggleClass('toggled');
 });
 
 function readURL(input) {
@@ -22,41 +22,41 @@ function readURL(input) {
 
 
 // Request to change the amount of product into a cart.
-$(".cart-item-form").on("submit", function (e) {
+$('.cart-item-form').on('submit', function (e) {
     e.preventDefault();
 
-    let formAction = $(this).attr("action");
+    let formAction = $(this).attr('action');
     
-    let itemId = $(this).children(".item-id").attr("value");
+    let itemId = $(this).children('.item-id').attr('value');
 
     let isValid = true;
-    if (formAction.includes("Decrease")) {
-        let amount = $(this).parent().find("#cart-item-amount-" + itemId).text();
+    if (formAction.includes('Decrease')) {
+        let amount = $(this).parent().find('#cart-item-amount-' + itemId).text();
 
         isValid = (+amount > 1);
     }
     if (isValid) {
         $.ajax({
-            type: "POST",
+            type: 'POST',
             url: formAction,
             data: { id: itemId },
             success: function (responce) {
-                $("#cart-item-amount-" + responce["id"]).html(responce["amount"]);
+                $('#cart-item-amount-' + responce['id']).html(responce['amount']);
 
-                $("#product-total-price-" + responce["id"]).html(responce["price"].toFixed(2).replace('.', ',') + " UAN");
+                $('#product-total-price-' + responce['id']).html(responce['price'].toFixed(2).replace('.', ',') + ' UAN');
 
-                let oldTotalPrice = $("#total-price-value").text().replace(',', '.');
-                let different = responce["diffInTotalPrice"];
+                let oldTotalPrice = $('#total-price-value').text().replace(',', '.');
+                let different = responce['diffInTotalPrice'];
                 let newTotalPrice = +oldTotalPrice + different;
-                $("#total-price-value").html(newTotalPrice.toFixed(2).replace('.', ','));
+                $('#total-price-value').html(newTotalPrice.toFixed(2).replace('.', ','));
 
-                let cartSize = $("#cart-size").text();
-                if (formAction.includes("Decrease")) {
+                let cartSize = $('#cart-size').text();
+                if (formAction.includes('Decrease')) {
                     cartSize = +cartSize - 1;
                 } else {
                     cartSize = +cartSize + 1;
                 }
-                $("#cart-size").html(cartSize);
+                $('#cart-size').html(cartSize);
             },
             failure: function (response) {
                 alert(response);
@@ -71,15 +71,34 @@ $(".cart-item-form").on("submit", function (e) {
 
 window.onscroll = function () { myFunction() };
 
-// Get the header
-var header = $("#total-order-info");
+var header = $('#total-order-info');
 
-// Add the sticky class to the header when you reach it's scroll position. Remove "sticky" when you leave the scroll position.
+// Add the sticky class to the header when you reach it's scroll position. Remove 'sticky' when you leave the scroll position.
 function myFunction() {
     if (window.pageYOffset > 62) {
-        header.addClass("sticky");
-        var container = $(".container")[0];
+        header.addClass('sticky');
+        var container = $('.container')[0];
     } else {
-        header.removeClass("sticky");
+        header.removeClass('sticky');
     }
 }
+
+
+// Update order paid's status.
+$('.is-payment-order').on('change', function (e) {
+    e.preventDefault();
+
+    let orderId = $(this).parent().children('.order-number').attr('value');
+
+    $.ajax('/Orders/UpdatePaymentStatus', {
+        type: 'POST',
+        dataType: 'json',
+        data: { id: orderId },
+        success: function (response) {
+            $('#payment-status-' + orderId).html((response['isPaid']) ? 'Paid' : 'Not paid');
+        },
+        error: function (data, status) {
+            console.log(data, status);
+        }
+    });
+});
